@@ -1,0 +1,22 @@
+class EspeceMoleculaire :
+	string nom;
+	int taille; //Diametre en nm
+	float vitesse; //Proportion vitesse max
+	int pop;
+	
+	
+class Reaction : 
+	int nR1, nR2;
+	EspeceMoleculaire* Reac1;
+	EspeceMoleculaire* Reac2;
+	EspeceMoleculaire* Produit1;
+	EspeceMoleculaire* Produit2;
+	float proba;
+	
+class Molecule :
+	float PositionX;
+	float PositionY;
+	float positionZ;
+	EspeceMoleculaire* espece;
+	bool traitee;
+	int noEspece;
