@@ -9,7 +9,7 @@ ALPHANUM [a-zA-Z][a-zA-Z0-9]
 
 %%
 
-{DIGITS}+     yylval = atoi(yytext); return INTEGER;
+{DIGITS}+		yylval = atoi(yytext); return INTEGER;
 
-{ALPHANUM}+
+{ALPHANUM}+		yylval = yytext; return IDENT;
 
