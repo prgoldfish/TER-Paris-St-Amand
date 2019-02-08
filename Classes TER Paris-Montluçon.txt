@@ -6,11 +6,10 @@ class EspeceMoleculaire :
 	
 	
 class Reaction : 
-	int nR1, nR2;
 	EspeceMoleculaire* Reac1;
-	EspeceMoleculaire* Reac2;
+	EspeceMoleculaire* Reac2; //0 si y a pas.
 	EspeceMoleculaire* Produit1;
-	EspeceMoleculaire* Produit2;
+	EspeceMoleculaire* Produit2; //0 si y a pas.
 	float proba;
 	
 class Molecule :
