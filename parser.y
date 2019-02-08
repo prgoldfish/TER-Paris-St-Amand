@@ -3,6 +3,7 @@
 	#include <cstdlib>
 	#include <string>
 	#include "EspeceMoleculaire.h"
+	#include "Reaction.h"
 	int yyparse();
 	int yylex();
 	int yyerror(std::string s);
@@ -31,8 +32,8 @@
 
 %%
 DECL : SPECIES LISTID SEMI
-LISTID	: IDENT
-		| IDENT COMMA LISTID
+LISTID	: IDENT {especes.push_back(new EspeceMoleculaire(§1))}
+		| IDENT COMMA LISTID {especes.push_back(new EspeceMoleculaire(§1))}
 ;
 SIZEM	: SIZE LP IDENT RP EQUALS INTEGER SEMI
 ;
@@ -42,10 +43,10 @@ SPEEDM	: SPEED LP IDENT RP EQUALS FLOAT SEMI
 ;
 DIA		: DIAM EQUALS INTEGER
 ;
-REACT	: REACTID ARROW REACTID LB FLOAT RB SEMI
+REACT	: IDENT REACTID ARROW IDENT REACTID LB FLOAT RB SEMI
 ;
-REACTID	: IDENT
-		| IDENT PLUS IDENT
+REACTID	: 
+		| PLUS IDENT
 ;
 SDECL	: DECL
 		| DECL SDECL

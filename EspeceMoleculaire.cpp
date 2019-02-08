@@ -12,3 +12,15 @@ EspeceMoleculaire::EspeceMoleculaire(std::string nom): nom(nom)
 EspeceMoleculaire::~EspeceMoleculaire()
 {
 }
+
+void EspeceMoleculaire::setTaille(int t){
+	taille = t;
+}
+
+void EspeceMoleculaire::setVitesse(float v){
+	vitesse = v;
+}
+
+void EspeceMoleculaire::setPop(int p){
+	pop = p;
+}
