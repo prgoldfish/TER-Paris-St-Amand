@@ -647,7 +647,7 @@ return SIZE;
 case 3:
 YY_RULE_SETUP
 #line 16 "AnalyseurFlex.l"
-yylval = atoi(yytext); return INTEGER;
+yylval = yytext; return INTEGER;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -657,7 +657,7 @@ yylval = yytext; return IDENT;
 case 5:
 YY_RULE_SETUP
 #line 20 "AnalyseurFlex.l"
-yylval = atof(yytext); return FLOAT;
+yylval = yytext; return FLOAT;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP

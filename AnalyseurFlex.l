@@ -13,11 +13,11 @@ ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 
 "size"				return SIZE;
 
-{DIGITS}+			yylval = atoi(yytext); return INTEGER;
+{DIGITS}+			yylval = yytext; return INTEGER;
 
 {ALPHANUM}+			yylval = yytext; return IDENT;
 
-{DIGITS}+"."{DIGITS}*	yylval = atof(yytext); return FLOAT;
+{DIGITS}+"."{DIGITS}*	yylval = yytext; return FLOAT;
 
 "+"					return PLUS;
 

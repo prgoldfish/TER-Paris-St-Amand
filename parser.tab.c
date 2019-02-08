@@ -62,8 +62,18 @@
 
 
 /* Copy the first part of user declarations.  */
+#line 1 "parser.y" /* yacc.c:339  */
 
-#line 67 "parser.tab.c" /* yacc.c:339  */
+	#include <iostream>
+	#include <cstdlib>
+	#include <string>
+	#define YYSTYPE char*
+	#define YYSTYPE_IS_DECLARED 1
+	int yyparse();
+	int yylex();
+	int yyerror(std::string s);
+
+#line 77 "parser.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -134,7 +144,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 138 "parser.tab.c" /* yacc.c:358  */
+#line 148 "parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -433,7 +443,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    21,    21,    22,    23
+       0,    32,    32,    33,    34
 };
 #endif
 
@@ -1201,7 +1211,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1205 "parser.tab.c" /* yacc.c:1646  */
+#line 1215 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1429,4 +1439,10 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 50 "./parser.y" /* yacc.c:1906  */
+#line 61 "parser.y" /* yacc.c:1906  */
+
+
+int yyerror(std::string s) {
+	std::cout << "yyerror : " << s << std::endl;
+	return 0;
+}

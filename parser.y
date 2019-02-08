@@ -1,3 +1,14 @@
+%{
+	#include <iostream>
+	#include <cstdlib>
+	#include <string>
+	#define YYSTYPE char*
+	#define YYSTYPE_IS_DECLARED 1
+	int yyparse();
+	int yylex();
+	int yyerror(std::string s);
+%}
+
 
 %token IDENT
 %token INTEGER
@@ -48,3 +59,8 @@ INST	: REACT
 		| POPM
 ;
 %%
+
+int yyerror(std::string s) {
+	std::cout << "yyerror : " << s << std::endl;
+	return 0;
+}
