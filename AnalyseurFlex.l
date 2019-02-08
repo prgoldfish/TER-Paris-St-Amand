@@ -1,5 +1,4 @@
 %{
-	#include <cstdlib>
 	#include "y.tab.h"
 %}
 
@@ -8,6 +7,11 @@ ALPHA 				[a-zA-Z]
 ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 
 %%
+
+
+"diametre"			return DIAM;
+
+"size"				return SIZE;
 
 {DIGITS}+			yylval = atoi(yytext); return INTEGER;
 
@@ -31,13 +35,9 @@ ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 
 "="					return EQUALS;
 
-"size"				return SIZE;
-
 "speed"				return SPEED;
 
 "pop"				return POP;
-
-"diametre"			return DIAM;
 
 "=>"				return ARROW;
 
