@@ -5,6 +5,10 @@ EspeceMoleculaire::EspeceMoleculaire(std::string nom, int taille, float vitesse,
 {
 }
 
+EspeceMoleculaire::EspeceMoleculaire(std::string nom): nom(nom)
+{
+}
+
 EspeceMoleculaire::~EspeceMoleculaire()
 {
 }

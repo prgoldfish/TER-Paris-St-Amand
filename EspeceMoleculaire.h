@@ -8,6 +8,7 @@ private:
     float vitesse;
     int pop;
 public:
+    EspeceMoleculaire(std::string nom);
     EspeceMoleculaire(std::string nom, int taille, float vitesse, int pop);
     ~EspeceMoleculaire();
 };

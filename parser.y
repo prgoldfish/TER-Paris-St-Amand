@@ -2,9 +2,12 @@
 	#include <iostream>
 	#include <cstdlib>
 	#include <string>
+	#include "EspeceMoleculaire.h"
 	int yyparse();
 	int yylex();
 	int yyerror(std::string s);
+
+	extern std::vector<EspeceMoleculaire> especes;
 %}
 
 
