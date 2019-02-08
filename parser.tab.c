@@ -67,13 +67,11 @@
 	#include <iostream>
 	#include <cstdlib>
 	#include <string>
-	#define YYSTYPE char*
-	#define YYSTYPE_IS_DECLARED 1
 	int yyparse();
 	int yylex();
 	int yyerror(std::string s);
 
-#line 77 "parser.tab.c" /* yacc.c:339  */
+#line 75 "parser.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -144,7 +142,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 148 "parser.tab.c" /* yacc.c:358  */
+#line 146 "parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -443,7 +441,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    33,    34
+       0,    30,    30,    31,    32
 };
 #endif
 
@@ -1211,7 +1209,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1215 "parser.tab.c" /* yacc.c:1646  */
+#line 1213 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1439,7 +1437,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 61 "parser.y" /* yacc.c:1906  */
+#line 59 "parser.y" /* yacc.c:1906  */
 
 
 int yyerror(std::string s) {

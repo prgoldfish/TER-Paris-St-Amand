@@ -2,8 +2,6 @@
 	#include <iostream>
 	#include <cstdlib>
 	#include <string>
-	#define YYSTYPE char*
-	#define YYSTYPE_IS_DECLARED 1
 	int yyparse();
 	int yylex();
 	int yyerror(std::string s);

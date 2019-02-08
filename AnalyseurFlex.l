@@ -1,6 +1,9 @@
 %{
+	#define YYSTYPE char*
 	#include "parser.tab.h"
 %}
+
+%option noyywrap
 
 DIGITS 				[0-9]
 ALPHA 				[a-zA-Z]
@@ -9,41 +12,41 @@ ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 %%
 
 
-"diametre"			return DIAM;
+"diametre"				return DIAM;
 
-"size"				return SIZE;
+"size"					return SIZE;
 
-{DIGITS}+			yylval = yytext; return INTEGER;
+{DIGITS}+				yylval = yytext; return INTEGER;
 
-{ALPHANUM}+			yylval = yytext; return IDENT;
+{ALPHANUM}+				yylval = yytext; return IDENT;
 
 {DIGITS}+"."{DIGITS}*	yylval = yytext; return FLOAT;
 
-"+"					return PLUS;
+"+"						return PLUS;
 
-"species"			return SPECIES;
+"species"				return SPECIES;
 
-"("					return LP;
+"("						return LP;
 
-")"					return RP;
+")"						return RP;
 
-","					return COMMA;
+","						return COMMA;
 
-"//".*				{}
+"//".*					{}
 
-";"					return COMMA;
+";"						return COMMA;
 
-"="					return EQUALS;
+"="						return EQUALS;
 
-"speed"				return SPEED;
+"speed"					return SPEED;
 
-"pop"				return POP;
+"pop"					return POP;
 
-"=>"				return ARROW;
+"=>"					return ARROW;
 
-"["					return LB;
+"["						return LB;
 
-"]"					return RB;
+"]"						return RB;
 
 %%
 
