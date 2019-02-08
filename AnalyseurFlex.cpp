@@ -441,7 +441,7 @@ static yyconst flex_int16_t yy_chk[91] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "AnalyseurFlex.l"
 #line 2 "AnalyseurFlex.l"
-	#include "y.tab.h"
+	#include "parser.tab.h"
 #line 446 "AnalyseurFlex.cpp"
 
 #define INITIAL 0
