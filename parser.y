@@ -2,12 +2,17 @@
 	#include <iostream>
 	#include <cstdlib>
 	#include <string>
+	#include "EspeceMoleculaire.h"
 	int yyparse();
 	int yylex();
 	int yyerror(std::string s);
 %}
 
-
+%union {
+	int intVal;
+	float floatVal;
+	char* textVal;
+}
 %token IDENT
 %token INTEGER
 %token FLOAT
@@ -28,7 +33,7 @@
 
 %%
 DECL : SPECIES LISTID SEMI
-LISTID	: IDENT
+LISTID	: IDENT {}
 		| IDENT COMMA LISTID
 ;
 SIZEM	: SIZE LP IDENT RP EQUALS INTEGER SEMI
