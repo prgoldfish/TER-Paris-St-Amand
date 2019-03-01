@@ -2,53 +2,53 @@
 %option noyywrap
 
 %{
+	 //{DIGITS}+				std::cout << "FLEXDIGITS" << std::endl; *yylval = yytext; return yy::parser::token::INTEGER;
 	#define YYSTYPE char*
 	#include "parser.tab.hpp"
 %}
 
 
 DIGITS 				[0-9]
-ALPHA 				[a-zA-Z]
-ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
+ALPHANUM 			[a-zA-Z][a-zA-Z0-9]*
 
 %%
 
 
-"diametre"				return yy::parser::token::DIAM;
+"diametre"				std::cout << "FLEXDIAM" << std::endl; return yy::parser::token::DIAM;
 
-"size"					return yy::parser::token::SIZE;
+"size"					std::cout << "FLEXSIZE" << std::endl; return yy::parser::token::SIZE;
 
-{DIGITS}+				*yylval = yytext; return yy::parser::token::INTEGER;
+"species"				std::cout << "FLEXSPECIES" << std::endl; return yy::parser::token::SPECIES;
 
-{ALPHANUM}+				*yylval = yytext; return yy::parser::token::IDENT;
+"speed"					std::cout << "FLEXSPEED" << std::endl; return yy::parser::token::SPEED;
 
-{DIGITS}+"."{DIGITS}*	*yylval = yytext; return yy::parser::token::FLOAT;
+"pop"					std::cout << "FLEXPOP" << std::endl; return yy::parser::token::POP;
 
-"+"						return yy::parser::token::PLUS;
+{ALPHANUM}+				std::cout << "FLEXALPHANUM" << std::endl; *yylval = yytext; return yy::parser::token::IDENT;
 
-"species"				return yy::parser::token::SPECIES;
+{DIGITS}+"."*{DIGITS}*	std::cout << "FLEXDIGITS" << std::endl; *yylval = yytext; return yy::parser::token::NUMBER;
 
-"("						return yy::parser::token::LP;
+"+"						std::cout << "FLEXPLUS" << std::endl; return yy::parser::token::PLUS;
 
-")"						return yy::parser::token::RP;
+"("						std::cout << "FLEXLP" << std::endl; return yy::parser::token::LP;
 
-","						return yy::parser::token::COMMA;
+")"						std::cout << "FLEXRP" << std::endl; return yy::parser::token::RP;
 
-"//".*					{}
+","						std::cout << "FLEXCOMMA" << std::endl; return yy::parser::token::COMMA;
 
-";"						return yy::parser::token::COMMA;
+"//".*					{std::cout << "FLEXCOMMENT" << std::endl; }
 
-"="						return yy::parser::token::EQUALS;
+[ \n\t\r]+				{std::cout << "FLEXWHITESPACE" << std::endl; }		
 
-"speed"					return yy::parser::token::SPEED;
+";"						std::cout << "FLEXSEMI" << std::endl; return yy::parser::token::SEMI;
 
-"pop"					return yy::parser::token::POP;
+"="						std::cout << "FLEXEQUALS" << std::endl; return yy::parser::token::EQUALS;
 
-"=>"					return yy::parser::token::ARROW;
+"->"					std::cout << "FLEXARROW" << std::endl; return yy::parser::token::ARROW;
 
-"["						return yy::parser::token::LB;
+"["						std::cout << "FLEXLB" << std::endl; return yy::parser::token::LB;
 
-"]"						return yy::parser::token::RB;
+"]"						std::cout << "FLEXRB" << std::endl; return yy::parser::token::RB;
 
 %%
 

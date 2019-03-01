@@ -18,8 +18,8 @@
 %define api.value.type {char*}
 
 %token IDENT
-%token INTEGER
-%token FLOAT
+/*%token INTEGER*/
+%token NUMBER
 %token SPECIES
 %token LP
 %token RP
@@ -40,10 +40,10 @@ MODELE	: SDECL SINST
 ;
 DECL : SPECIES LISTID SEMI {std::cout << "SPECIES" << std::endl;}
 ;
-LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1));}
-		| IDENT COMMA LISTID {especes.push_back(new EspeceMoleculaire($1));}
+LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1)); std::cout << "SPECIES IDENT" << std::endl;}
+		| LISTID COMMA IDENT {especes.push_back(new EspeceMoleculaire($3)); std::cout << "SPECIES IDENT COMMA" << std::endl;}
 ;
-SIZEM	: SIZE LP IDENT RP EQUALS INTEGER SEMI {
+SIZEM	: SIZE LP IDENT RP EQUALS NUMBER SEMI {
 													for(EspeceMoleculaire* e : especes) 
 													{
 														if(e->getNom() == $3) 
@@ -52,9 +52,10 @@ SIZEM	: SIZE LP IDENT RP EQUALS INTEGER SEMI {
 															break;
 														}
 													}
+													std::cout << "SIZE" << std::endl;
 												}
 ;
-SPEEDM	: SPEED LP IDENT RP EQUALS FLOAT SEMI {
+SPEEDM	: SPEED LP IDENT RP EQUALS NUMBER SEMI {
 													for(EspeceMoleculaire* e : especes) 
 													{
 														if(e->getNom() == $3) 
@@ -63,9 +64,10 @@ SPEEDM	: SPEED LP IDENT RP EQUALS FLOAT SEMI {
 															break;
 														}
 													}
+													std::cout << "SPEED" << std::endl;
 												}
 ;
-POPM	: POP LP IDENT RP EQUALS INTEGER SEMI {
+POPM	: POP LP IDENT RP EQUALS NUMBER SEMI {
 													for(EspeceMoleculaire* e : especes) 
 													{
 														if(e->getNom() == $3) 
@@ -74,11 +76,12 @@ POPM	: POP LP IDENT RP EQUALS INTEGER SEMI {
 															break;
 														}
 													}
+													std::cout << "POP" << std::endl;
 												}
 ;
-DIA		: DIAM EQUALS INTEGER SEMI {diametre = atoi($3);}
+DIA		: DIAM EQUALS NUMBER SEMI {diametre = atoi($3); std::cout << "DIAM" << std::endl;}
 ;
-REACT	: IDENT REACTID ARROW IDENT REACTID LB FLOAT RB SEMI {
+REACT	: IDENT REACTID ARROW IDENT REACTID LB NUMBER RB SEMI {
 																EspeceMoleculaire *r1, *r2, *p1, *p2;
 																bool dr = false;
 																for(EspeceMoleculaire* e : especes)
@@ -113,17 +116,19 @@ REACT	: IDENT REACTID ARROW IDENT REACTID LB FLOAT RB SEMI {
 																	}
 																}
 																reactions.push_back(new Reaction(r1, r2, p1, p2, dr, dp, atof($7)));
+																std::cout << "REACT" << std::endl;
 															 }
 ;
 REACTID	: {	char txt[1] = "";
-			$$ = txt;}
-		| PLUS IDENT {$$ = $2;}
+			$$ = txt;
+			std::cout << "REACTIDENT" << std::endl;}
+		| PLUS IDENT {$$ = $2; std::cout << "PLUS REACTIDENT" << std::endl;}
 ;
 SDECL	: DECL
-		| DECL SDECL
+		| SDECL DECL
 ;
 SINST	: INST
-		| INST SINST
+		| SINST INST
 ;
 INST	: REACT
 		| DIA

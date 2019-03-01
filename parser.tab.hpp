@@ -138,22 +138,21 @@ namespace yy {
       enum yytokentype
       {
         IDENT = 258,
-        INTEGER = 259,
-        FLOAT = 260,
-        SPECIES = 261,
-        LP = 262,
-        RP = 263,
-        LB = 264,
-        RB = 265,
-        COMMA = 266,
-        SEMI = 267,
-        EQUALS = 268,
-        SIZE = 269,
-        SPEED = 270,
-        POP = 271,
-        DIAM = 272,
-        PLUS = 273,
-        ARROW = 274
+        NUMBER = 259,
+        SPECIES = 260,
+        LP = 261,
+        RP = 262,
+        LB = 263,
+        RB = 264,
+        COMMA = 265,
+        SEMI = 266,
+        EQUALS = 267,
+        SIZE = 268,
+        SPEED = 269,
+        POP = 270,
+        DIAM = 271,
+        PLUS = 272,
+        ARROW = 273
       };
     };
 
@@ -435,13 +434,13 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 53,     ///< Last index in yytable_.
+      yylast_ = 51,     ///< Last index in yytable_.
       yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyempty_ = -2,
       yyfinal_ = 7, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 20  ///< Number of tokens.
+      yyntokens_ = 19  ///< Number of tokens.
     };
 
 
@@ -450,7 +449,7 @@ namespace yy {
 
 
 } // yy
-#line 454 "parser.tab.hpp" // lalr1.cc:372
+#line 453 "parser.tab.hpp" // lalr1.cc:372
 
 
 
