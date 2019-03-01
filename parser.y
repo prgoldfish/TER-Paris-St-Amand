@@ -76,7 +76,7 @@ POPM	: POP LP IDENT RP EQUALS INTEGER SEMI {
 													}
 												}
 ;
-DIA		: DIAM EQUALS INTEGER {diametre = atoi($3);}
+DIA		: DIAM EQUALS INTEGER SEMI {diametre = atoi($3);}
 ;
 REACT	: IDENT REACTID ARROW IDENT REACTID LB FLOAT RB SEMI {
 																EspeceMoleculaire *r1, *r2, *p1, *p2;
