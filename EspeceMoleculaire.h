@@ -1,3 +1,6 @@
+#ifndef ESPECEMOLECULAIRE_H
+#define ESPECEMOLECULAIRE_H
+
 #include <string>
 
 class EspeceMoleculaire
@@ -8,6 +11,7 @@ private:
     float vitesse;
     int pop;
 public:
+    EspeceMoleculaire();
     EspeceMoleculaire(std::string nom);
     EspeceMoleculaire(std::string nom, int taille, float vitesse, int pop);
     ~EspeceMoleculaire();
@@ -17,3 +21,5 @@ public:
     void setVitesse(float);
     void setPop(int);
 };
+
+#endif

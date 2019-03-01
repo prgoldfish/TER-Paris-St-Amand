@@ -1,9 +1,11 @@
+%option bison-bridge
+%option noyywrap
+
 %{
 	#define YYSTYPE char*
-	#include "parser.tab.h"
+	#include "parser.tab.hpp"
 %}
 
-%option noyywrap
 
 DIGITS 				[0-9]
 ALPHA 				[a-zA-Z]
@@ -12,41 +14,41 @@ ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 %%
 
 
-"diametre"				return DIAM;
+"diametre"				return yy::parser::token::DIAM;
 
-"size"					return SIZE;
+"size"					return yy::parser::token::SIZE;
 
-{DIGITS}+				yylval = yytext; return INTEGER;
+{DIGITS}+				yylval = &yytext; return yy::parser::token::INTEGER;
 
-{ALPHANUM}+				yylval = yytext; return IDENT;
+{ALPHANUM}+				yylval = &yytext; return yy::parser::token::IDENT;
 
-{DIGITS}+"."{DIGITS}*	yylval = yytext; return FLOAT;
+{DIGITS}+"."{DIGITS}*	yylval = &yytext; return yy::parser::token::FLOAT;
 
-"+"						return PLUS;
+"+"						return yy::parser::token::PLUS;
 
-"species"				return SPECIES;
+"species"				return yy::parser::token::SPECIES;
 
-"("						return LP;
+"("						return yy::parser::token::LP;
 
-")"						return RP;
+")"						return yy::parser::token::RP;
 
-","						return COMMA;
+","						return yy::parser::token::COMMA;
 
 "//".*					{}
 
-";"						return COMMA;
+";"						return yy::parser::token::COMMA;
 
-"="						return EQUALS;
+"="						return yy::parser::token::EQUALS;
 
-"speed"					return SPEED;
+"speed"					return yy::parser::token::SPEED;
 
-"pop"					return POP;
+"pop"					return yy::parser::token::POP;
 
-"=>"					return ARROW;
+"=>"					return yy::parser::token::ARROW;
 
-"["						return LB;
+"["						return yy::parser::token::LB;
 
-"]"						return RB;
+"]"						return yy::parser::token::RB;
 
 %%
 

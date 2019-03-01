@@ -1,3 +1,6 @@
+#ifndef REACTION_H
+#define REACTION_H
+
 #include <string>
 #include "EspeceMoleculaire.h"
 
@@ -15,3 +18,5 @@ public:
     Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2, bool dr, bool dp, float p);
     ~Reaction();
 };
+
+#endif

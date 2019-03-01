@@ -9,6 +9,10 @@ EspeceMoleculaire::EspeceMoleculaire(std::string nom): nom(nom)
 {
 }
 
+EspeceMoleculaire::EspeceMoleculaire(): nom("")
+{
+}
+
 EspeceMoleculaire::~EspeceMoleculaire()
 {
 }

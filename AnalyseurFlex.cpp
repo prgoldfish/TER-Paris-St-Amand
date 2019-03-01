@@ -488,9 +488,9 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "AnalyseurFlex.l"
-#line 2 "AnalyseurFlex.l"
+#line 5 "AnalyseurFlex.l"
 	#define YYSTYPE char*
-	#include "parser.tab.h"
+	#include "parser.tab.hpp"
 #line 495 "AnalyseurFlex.cpp"
 
 #define INITIAL 0
@@ -537,6 +537,10 @@ char *yyget_text (void );
 int yyget_lineno (void );
 
 void yyset_lineno (int line_number  );
+
+YYSTYPE * yyget_lval (void );
+
+void yyset_lval (YYSTYPE * yylval_param  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -650,9 +654,11 @@ static int input (void );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int yylex (void);
+extern int yylex \
+               (YYSTYPE * yylval_param );
 
-#define YY_DECL int yylex (void)
+#define YY_DECL int yylex \
+               (YYSTYPE * yylval_param )
 #endif /* !YY_DECL */
 
 /* Code executed at the beginning of each rule, after yytext and yyleng
@@ -678,11 +684,15 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 12 "AnalyseurFlex.l"
+        YYSTYPE * yylval;
+    
+#line 14 "AnalyseurFlex.l"
 
 
 
-#line 686 "AnalyseurFlex.cpp"
+#line 694 "AnalyseurFlex.cpp"
+
+    yylval = yylval_param;
 
 	if ( !(yy_init) )
 		{
@@ -767,100 +777,100 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "AnalyseurFlex.l"
-return DIAM;
+#line 17 "AnalyseurFlex.l"
+return yy::parser::token::DIAM;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "AnalyseurFlex.l"
-return SIZE;
+#line 19 "AnalyseurFlex.l"
+return yy::parser::token::SIZE;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "AnalyseurFlex.l"
-yylval = yytext; return INTEGER;
+#line 21 "AnalyseurFlex.l"
+yylval = &yytext; return yy::parser::token::INTEGER;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 21 "AnalyseurFlex.l"
-yylval = yytext; return IDENT;
+#line 23 "AnalyseurFlex.l"
+yylval = &yytext; return yy::parser::token::IDENT;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 23 "AnalyseurFlex.l"
-yylval = yytext; return FLOAT;
+#line 25 "AnalyseurFlex.l"
+yylval = &yytext; return yy::parser::token::FLOAT;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "AnalyseurFlex.l"
-return PLUS;
+#line 27 "AnalyseurFlex.l"
+return yy::parser::token::PLUS;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 27 "AnalyseurFlex.l"
-return SPECIES;
+#line 29 "AnalyseurFlex.l"
+return yy::parser::token::SPECIES;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 29 "AnalyseurFlex.l"
-return LP;
+#line 31 "AnalyseurFlex.l"
+return yy::parser::token::LP;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 31 "AnalyseurFlex.l"
-return RP;
+#line 33 "AnalyseurFlex.l"
+return yy::parser::token::RP;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 33 "AnalyseurFlex.l"
-return COMMA;
+#line 35 "AnalyseurFlex.l"
+return yy::parser::token::COMMA;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "AnalyseurFlex.l"
+#line 37 "AnalyseurFlex.l"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 37 "AnalyseurFlex.l"
-return COMMA;
+#line 39 "AnalyseurFlex.l"
+return yy::parser::token::COMMA;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 39 "AnalyseurFlex.l"
-return EQUALS;
+#line 41 "AnalyseurFlex.l"
+return yy::parser::token::EQUALS;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 41 "AnalyseurFlex.l"
-return SPEED;
+#line 43 "AnalyseurFlex.l"
+return yy::parser::token::SPEED;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 43 "AnalyseurFlex.l"
-return POP;
+#line 45 "AnalyseurFlex.l"
+return yy::parser::token::POP;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 45 "AnalyseurFlex.l"
-return ARROW;
+#line 47 "AnalyseurFlex.l"
+return yy::parser::token::ARROW;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 47 "AnalyseurFlex.l"
-return LB;
+#line 49 "AnalyseurFlex.l"
+return yy::parser::token::LB;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 49 "AnalyseurFlex.l"
-return RB;
+#line 51 "AnalyseurFlex.l"
+return yy::parser::token::RB;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 51 "AnalyseurFlex.l"
+#line 53 "AnalyseurFlex.l"
 ECHO;
 	YY_BREAK
-#line 864 "AnalyseurFlex.cpp"
+#line 874 "AnalyseurFlex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1858,7 +1868,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 51 "AnalyseurFlex.l"
+#line 53 "AnalyseurFlex.l"
 
 
 
