@@ -38,7 +38,8 @@
 %%
 MODELE	: SDECL SINST
 ;
-DECL : SPECIES LISTID SEMI
+DECL : SPECIES LISTID SEMI {std::cout << "SPECIES" << std::endl;}
+;
 LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1));}
 		| IDENT COMMA LISTID {especes.push_back(new EspeceMoleculaire($1));}
 ;
