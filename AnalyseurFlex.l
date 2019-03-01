@@ -18,11 +18,11 @@ ALPHANUM 			[a-zA-Z][a-zA-Z0-9]
 
 "size"					return yy::parser::token::SIZE;
 
-{DIGITS}+				yylval = &yytext; return yy::parser::token::INTEGER;
+{DIGITS}+				*yylval = yytext; return yy::parser::token::INTEGER;
 
-{ALPHANUM}+				yylval = &yytext; return yy::parser::token::IDENT;
+{ALPHANUM}+				*yylval = yytext; return yy::parser::token::IDENT;
 
-{DIGITS}+"."{DIGITS}*	yylval = &yytext; return yy::parser::token::FLOAT;
+{DIGITS}+"."{DIGITS}*	*yylval = yytext; return yy::parser::token::FLOAT;
 
 "+"						return yy::parser::token::PLUS;
 

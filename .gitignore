@@ -1,3 +1,7 @@
 .vscode/settings.json
 .vscode/c_cpp_properties.json
-analyLex.exe
+analyLex
+AnalyseurFlex.cpp
+parser.tab.cpp
+stack.hh
+*.o
