@@ -20,6 +20,9 @@ public:
     void setTaille(int);
     void setVitesse(float);
     void setPop(int);
+    int getPop();
+    float getVitesse();
+    int getTaille();
 };
 
 #endif

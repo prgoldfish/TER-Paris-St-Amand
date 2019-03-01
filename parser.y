@@ -46,6 +46,7 @@ LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1)); std::cout << "SPEC
 SIZEM	: SIZE LP IDENT RP EQUALS NUMBER SEMI {
 													for(EspeceMoleculaire* e : especes) 
 													{
+														std::cout << $3 << std::endl;
 														if(e->getNom() == $3) 
 														{
 															e->setTaille(atoi($6));

@@ -16,3 +16,38 @@ Reaction::Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculai
 Reaction::~Reaction()
 {
 }
+
+EspeceMoleculaire* Reaction::getReac1()
+{
+	return reac1;
+}
+
+EspeceMoleculaire* Reaction::getReac2()
+{
+	return reac2;
+}
+
+EspeceMoleculaire* Reaction::getProduit1()
+{
+	return produit1;
+}
+
+EspeceMoleculaire* Reaction::getProduit2()
+{
+	return produit2;
+}
+
+bool Reaction::get2Reac()
+{
+	return deuxReac;
+}
+
+bool Reaction::get2Produits()
+{
+	return deuxProduit;
+}
+
+float Reaction::getProba()
+{
+	return proba;
+}

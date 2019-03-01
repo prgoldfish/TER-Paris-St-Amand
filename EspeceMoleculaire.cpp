@@ -21,6 +21,18 @@ std::string EspeceMoleculaire::getNom(){
 	return nom;
 }
 
+int EspeceMoleculaire::getTaille(){
+	return taille;
+}
+
+float EspeceMoleculaire::getVitesse(){
+	return vitesse;
+}
+
+int EspeceMoleculaire::getPop(){
+	return pop;
+}
+
 void EspeceMoleculaire::setTaille(int t){
 	taille = t;
 }

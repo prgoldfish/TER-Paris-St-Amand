@@ -17,6 +17,13 @@ private:
 public:
     Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2, bool dr, bool dp, float p);
     ~Reaction();
+	EspeceMoleculaire* getReac1();
+	EspeceMoleculaire* getReac2();
+	EspeceMoleculaire* getProduit1();
+	EspeceMoleculaire* getProduit2();
+	bool get2Reac();
+	bool get2Produits();
+	float getProba();
 };
 
 #endif
