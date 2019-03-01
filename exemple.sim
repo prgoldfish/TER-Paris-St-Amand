@@ -1,0 +1,26 @@
+//
+// reaction enzymatique: E catalyse s -> p
+//
+
+species	E, s, Es, p;    // les 4 especes moleculaires, E, s, p et le complexe Es
+
+diametre = 100;         // la vesicule est une sphere de 100 nm de diametre
+
+size (E) = 10;          // l'enzyme fait 10 nm de diametre
+speed (E) = 0.1;        // et diffuse a 0.1 fois la vitesse maximale
+
+size (Es) = 10;         // pareil pour le complexe Es
+speed (Es) = 0.1;
+
+size (s) = 1;           // le substrat s fait 1 nm de diametre
+speed (s) = 1;          // et diffuse a vitesse maximale
+
+size (p) = 1;           // pareil pour le produit p
+speed (p) = 1;
+
+E + s -> Es [0.5];      // L'enzyme capture son substrat
+Es    -> E + s [0.002]; // mais le relache...
+Es    -> E + p [0.006]; // ou bien libere le produit
+
+pop (E) = 30;           // 30 enzymes au depart
+pop (s) = 1000;         // et 1000 substrats
