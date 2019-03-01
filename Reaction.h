@@ -4,12 +4,14 @@
 class Reaction
 {
 private:
-    EspeceMoleculaire* Reac1;
-	EspeceMoleculaire* Reac2;
-	EspeceMoleculaire* Produit1;
-	EspeceMoleculaire* Produit2;
+    EspeceMoleculaire* reac1;
+	EspeceMoleculaire* reac2;
+	EspeceMoleculaire* produit1;
+	EspeceMoleculaire* produit2;
+	bool deuxReac;
+	bool deuxProduit;
 	float proba;
 public:
-    Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2);
+    Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2, bool dr, bool dp, float p);
     ~Reaction();
 };

@@ -13,6 +13,10 @@ EspeceMoleculaire::~EspeceMoleculaire()
 {
 }
 
+std::string EspeceMoleculaire::getNom(){
+	return nom;
+}
+
 void EspeceMoleculaire::setTaille(int t){
 	taille = t;
 }

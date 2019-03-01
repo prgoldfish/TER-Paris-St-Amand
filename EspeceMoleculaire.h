@@ -12,6 +12,7 @@ public:
     EspeceMoleculaire(std::string nom, int taille, float vitesse, int pop);
     ~EspeceMoleculaire();
 
+    std::string getNom();
     void setTaille(int);
     void setVitesse(float);
     void setPop(int);
