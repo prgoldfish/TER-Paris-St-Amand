@@ -19,3 +19,27 @@ class Molecule :
 	EspeceMoleculaire* espece;
 	bool traitee;
 	int noEspece;
+
+
+
+Simulateur simple (Gillespie) : 
+	Considère toutes les molécules
+	Hypothèse : Molécules réparties façon homogène
+	Estimation statistique
+	Nb_mol_total/Volume_total -> Concentration
+	Même densité partout
+	Nb_choc lié à la concentration
+	Concentration mol1 = Nb_mol1/Volume_total
+	Volume est constant
+	Réaction mono- et bimoléculaires
+	Mono : 1 molécule à gauche de la formule. e1 -> e3 + e4
+	Bi : 2 molécules à gauche de la formule. e1 + e2 -> e3 + e4
+	Trouver nombre de chocs. Proba * nb chocs font la réaction.
+	Estimation nb chocs : Nb_choc_Reac = alpha * Concentration_em1 * Concentration_em2
+	Nb_chocs = float
+	Partie entière à coup sûr. Proba de partie décimale d'arriver une fois de +
+	alpha(pour 100 ms) = 7.4 * 10^-7
+	Mono : proba que la réaction s'effectue toute seule (Pas besoin de chocs) : Nb_reac = proba * Nb_mol
+	L'ordre des réactions de doit pas être la même à chaque fois.
+	Faire un ordre aléatoire
+

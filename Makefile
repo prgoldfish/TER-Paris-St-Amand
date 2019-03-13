@@ -34,7 +34,7 @@ clean:
 					rm -rf *.o
 
 cleanGen: 
-					rm -rf AnalyseurFlex.cpp parser.tab.cpp stack.hh
+					rm -rf AnalyseurFlex.cpp parser.tab.cpp
 
 cleanAll: clean cleanGen
 

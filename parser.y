@@ -16,6 +16,7 @@
 
 %language "c++"
 %define api.value.type {char*}
+%require "3.2" /*To remove useless stack.hh*/
 
 %token IDENT
 /*%token INTEGER*/
