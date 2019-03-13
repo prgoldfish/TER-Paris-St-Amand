@@ -20,6 +20,8 @@ class Molecule :
 	bool traitee;
 	int noEspece;
 
+CSV : Temps; Nb_Em1; Nb_Em2; ...; Nb_Emn; Nb_chocs; 
+
 
 
 Simulateur simple (Gillespie) : 
