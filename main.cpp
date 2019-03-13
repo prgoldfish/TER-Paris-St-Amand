@@ -33,7 +33,7 @@ int main (int argc, char** argv)
         std::cout << "\tProba : " << r->getProba() << std::endl << std::endl;
     }
 
-    std::cout << "\tDiametre : " << diametre << std::endl << std::endl;
+    std::cout << "Diametre : " << diametre << std::endl << std::endl;
 
     return 0;
 }
