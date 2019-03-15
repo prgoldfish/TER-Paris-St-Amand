@@ -11,6 +11,7 @@ class SortieCSV{
 	public:
 		void initFichier(std::vector<EspeceMoleculaire*> especes);
 		void ajouter(std::vector<double> valeurs);
+		void fermerFichier();
 };
 
 #endif
