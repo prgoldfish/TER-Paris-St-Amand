@@ -3,6 +3,7 @@
 #include "EspeceMoleculaire.h"
 #include "Reaction.h"
 #include "SortieCSV.h"
+#include "Simulation.h"
 
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
@@ -38,6 +39,23 @@ int main (int argc, char** argv)
 
     SortieCSV csv;
     csv.initFichier(especes);
+
+
+    std::cout << "Après une étape : " << std::endl;
+
+    for(int j = 0; j < 5000; j++)
+    {    
+        int i = 0;
+
+        for(double d : simulationSimpleStep(0)) 
+        {
+            std::cout << "Col " << i << " : " << d << std::endl;
+            i++;
+
+        }
+
+        std::cout << std::endl << std::endl << std::endl;
+    }
 
     return 0;
 }

@@ -37,10 +37,10 @@ Simulateur simple (Gillespie) :
 	Mono : 1 molécule à gauche de la formule. e1 -> e3 + e4
 	Bi : 2 molécules à gauche de la formule. e1 + e2 -> e3 + e4
 	Trouver nombre de chocs. Proba * nb chocs font la réaction.
-	Estimation nb chocs : Nb_choc_Reac = alpha * Concentration_em1 * Concentration_em2
+	Estimation nb chocs : Nb_choc_Reac = alpha * Nb_Em1 * Nb_Em2 / volume
 	Nb_chocs = float
 	Partie entière à coup sûr. Proba de partie décimale d'arriver une fois de +
-	alpha(pour 100 ms) = 7.4 * 10^-7
+	alpha(pour 100 ms) = 7.4 * 10^-7  (Conversion diamètre en microns)
 	Mono : proba que la réaction s'effectue toute seule (Pas besoin de chocs) : Nb_reac = proba * Nb_mol
 	L'ordre des réactions de doit pas être la même à chaque fois.
 	Faire un ordre aléatoire
