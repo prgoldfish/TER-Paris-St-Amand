@@ -2,6 +2,7 @@
 #include "parser.tab.hpp"
 #include "EspeceMoleculaire.h"
 #include "Reaction.h"
+#include "SortieCSV.h"
 
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
@@ -34,6 +35,9 @@ int main (int argc, char** argv)
     }
 
     std::cout << "Diametre : " << diametre << std::endl << std::endl;
+
+    SortieCSV csv;
+    csv.initFichier(especes);
 
     return 0;
 }
