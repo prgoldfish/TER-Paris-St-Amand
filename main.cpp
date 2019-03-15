@@ -40,6 +40,8 @@ int main (int argc, char** argv)
     SortieCSV csv;
     csv.initFichier(especes);
 
+    double temps = 0;
+    std::vector<double> resultats;
 
     std::cout << "Après une étape : " << std::endl;
 
@@ -47,12 +49,18 @@ int main (int argc, char** argv)
     {    
         int i = 0;
 
-        for(double d : simulationSimpleStep(0)) 
+        resultats = simulationSimpleStep(temps);
+
+        for(double d : resultats) 
         {
             std::cout << "Col " << i << " : " << d << std::endl;
             i++;
 
         }
+
+        csv.ajouter(resultats);
+
+        temps = resultats.front();
 
         std::cout << std::endl << std::endl << std::endl;
     }
@@ -66,6 +74,9 @@ int main (int argc, char** argv)
     {
         r->~Reaction();
     }
+
+    
+    csv.fermerFichier();
 
     return 0;
 }
