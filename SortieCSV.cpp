@@ -28,6 +28,6 @@ void SortieCSV::ajouter(std::vector<double> valeurs){
 	}
 }
 
-void fermerFichier(){
-	SortieCSV::fichierCSV.
+void SortieCSV::fermerFichier(){
+	fichierCSV.close();
 }
