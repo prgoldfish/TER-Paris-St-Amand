@@ -74,7 +74,7 @@ POPM	: POP LP IDENT RP EQUALS NUMBER SEMI {
 													{
 														if(e->getNom() == $3) 
 														{
-															e->setPop(atoi($6));
+															e->pop = atoi($6);
 															break;
 														}
 													}
