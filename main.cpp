@@ -18,7 +18,7 @@ int main (int argc, char** argv)
         std::cout << "\tNom : " << e->getNom() << std::endl;
         std::cout << "\tTaille : " << e->getTaille() << std::endl;
         std::cout << "\tVitesse : " << e->getVitesse() << std::endl;
-        std::cout << "\tPop : " << e->getPop() << std::endl << std::endl;
+        std::cout << "\tPop : " << e->pop << std::endl << std::endl;
     }
 
     std::cout << std::endl;
