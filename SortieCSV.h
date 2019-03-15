@@ -9,7 +9,8 @@ class SortieCSV{
 	private:
 		std::ofstream fichierCSV;
 	public:
-		int initFichier(std::vector<EspeceMoleculaire*> especes);
+		void initFichier(std::vector<EspeceMoleculaire*> especes);
+		void ajouter(std::vector<double> valeurs);
 };
 
 #endif
