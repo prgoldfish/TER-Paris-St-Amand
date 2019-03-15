@@ -5,3 +5,4 @@ AnalyseurFlex.cpp
 parser.tab.cpp
 stack.hh
 *.o
+resultat.csv
