@@ -22,7 +22,11 @@ class Molecule :
 
 CSV : Temps; Nb_Em1; Nb_Em2; ...; Nb_Emn; Nb_chocs; 
 
-
+Arguments du programme : 
+	-f : Nom du fichier
+	-t : Temps total (en ms)
+	-s : Type de simulation
+	
 
 Simulateur simple (Gillespie) : 
 	Considère toutes les molécules

@@ -1,4 +1,6 @@
 #include <cstdlib>
+#include <cstdio>
+#include <string>
 #include "parser.tab.hpp"
 #include "EspeceMoleculaire.h"
 #include "Reaction.h"
@@ -8,9 +10,52 @@
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
 std::vector<Reaction*> reactions;
+extern FILE *yyin;
 
 int main (int argc, char** argv)
 {
+    int a = 2;
+    int nbIter = 100;
+    bool fileDone = false, timeDone = false, simultypeDone = false, entiteCentree = false;
+    while (argc > a) 
+    {
+        if(std::string(argv[a - 1]) == "-f" && !fileDone)
+        {
+            yyin = fopen(argv[a], "r");
+            fileDone = true;
+        }
+        else if(std::string(argv[a - 1]) == "-t" && !timeDone)
+        {
+            nbIter = atoi(argv[a]) / 100;
+            timeDone = true;
+            if(nbIter < 1)
+            {
+               std::cout << "Temps invalide. Le temps doit etre d'au moins 100 ms." << std::endl;
+               exit(0); 
+            }
+        }
+        else if(std::string(argv[a - 1]) == "-s" && !simultypeDone)
+        {
+            if(std::string(argv[a]) == "entiteCentree")
+            {
+                entiteCentree = true;
+            }
+            else if(std::string(argv[a]) == "simple")
+            {
+                entiteCentree = false;
+            }
+            else
+            {
+                std::cout << "Mode de simulation non reconnu. Modes disponibles : entiteCentree et simple" << std::endl;
+                exit(0);
+            }
+            simultypeDone = true;
+        }
+        a += 2;
+    }
+    
+
+
     yy::parser parser;
     parser.parse();
 
@@ -45,24 +90,30 @@ int main (int argc, char** argv)
 
     std::cout << "Après une étape : " << std::endl;
 
-    for(int j = 0; j < 5000; j++)
-    {    
-        int i = 0;
+    if (entiteCentree) {
+        /* code */
+    }
+    else
+    {
+         for(int j = 0; j < nbIter; j++)
+        {    
+            int i = 0;
 
-        resultats = simulationSimpleStep(temps);
+            resultats = simulationSimpleStep(temps);
 
-        for(double d : resultats) 
-        {
-            std::cout << "Col " << i << " : " << d << std::endl;
-            i++;
+            for(double d : resultats) 
+            {
+                std::cout << "Col " << i << " : " << d << std::endl;
+                i++;
 
+            }
+
+            csv.ajouter(resultats);
+
+            temps = resultats.front();
+
+            std::cout << std::endl << std::endl << std::endl;
         }
-
-        csv.ajouter(resultats);
-
-        temps = resultats.front();
-
-        std::cout << std::endl << std::endl << std::endl;
     }
 
     for(auto e : especes)
@@ -75,7 +126,7 @@ int main (int argc, char** argv)
         r->~Reaction();
     }
 
-    
+
     csv.fermerFichier();
 
     return 0;
