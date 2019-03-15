@@ -9,8 +9,9 @@ private:
     std::string nom;
     int taille;
     float vitesse;
-    int pop;
 public:
+    int pop;
+
     EspeceMoleculaire();
     EspeceMoleculaire(std::string nom);
     EspeceMoleculaire(std::string nom, int taille, float vitesse, int pop);
@@ -19,8 +20,6 @@ public:
     std::string getNom();
     void setTaille(int);
     void setVitesse(float);
-    void setPop(int);
-    int getPop();
     float getVitesse();
     int getTaille();
 };
