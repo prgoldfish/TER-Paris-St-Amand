@@ -1,5 +1,6 @@
 #include "Simulation.h"
 
+#include <iostream>
 
 std::vector<double> simulationSimpleStep(double time)
 {
@@ -52,8 +53,9 @@ std::vector<double> simulationSimpleStep(double time)
 int getNbChocs(double proba, int nEm1, int nEm2, std::minstd_rand rng)
 {
 	double alpha = 7.4e-7;
-	double volume = 4.0 * M_PI * 3.0 *  pow((double) diametre, 3.0);
+	double volume = 4.0 * M_PI * 3.0 *  pow((double) diametre * 10e-9 / 2, 3.0);
 	double nb = proba * alpha * nEm1 * nEm2 / (volume * volume);
+	std::cout << "Nb Chocs : " << nb << std::endl; 
 	int nbChocs = (int) nb;
 	double decPart = nb - nbChocs;
 	std::uniform_real_distribution<double> distribution(0.0,1.0);
