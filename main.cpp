@@ -30,7 +30,7 @@ int main (int argc, char** argv)
             timeDone = true;
             if(nbIter < 1)
             {
-               std::cout << "Temps invalide. Le temps doit etre d'au moins 100 ms." << std::endl;
+               std::cout << "Temps invalide. Le temps doit etre d'au moins 100 µs." << std::endl;
                exit(0); 
             }
         }

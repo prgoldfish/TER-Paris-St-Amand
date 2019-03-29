@@ -39,22 +39,20 @@
 %%
 MODELE	: SDECL SINST
 ;
-DECL : SPECIES LISTID SEMI {std::cout << "SPECIES" << std::endl;}
+DECL : SPECIES LISTID SEMI {}
 ;
-LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1)); std::cout << "SPECIES IDENT" << std::endl;}
-		| LISTID COMMA IDENT {especes.push_back(new EspeceMoleculaire($3)); std::cout << "SPECIES IDENT COMMA" << std::endl;}
+LISTID	: IDENT {especes.push_back(new EspeceMoleculaire($1));}
+		| LISTID COMMA IDENT {especes.push_back(new EspeceMoleculaire($3));}
 ;
 SIZEM	: SIZE LP IDENT RP EQUALS NUMBER SEMI {
 													for(EspeceMoleculaire* e : especes) 
 													{
-														std::cout << $3 << std::endl;
 														if(e->getNom() == $3) 
 														{
 															e->setTaille(atoi($6));
 															break;
 														}
 													}
-													std::cout << "SIZE" << std::endl;
 												}
 ;
 SPEEDM	: SPEED LP IDENT RP EQUALS NUMBER SEMI {
@@ -66,7 +64,6 @@ SPEEDM	: SPEED LP IDENT RP EQUALS NUMBER SEMI {
 															break;
 														}
 													}
-													std::cout << "SPEED" << std::endl;
 												}
 ;
 POPM	: POP LP IDENT RP EQUALS NUMBER SEMI {
@@ -78,10 +75,9 @@ POPM	: POP LP IDENT RP EQUALS NUMBER SEMI {
 															break;
 														}
 													}
-													std::cout << "POP" << std::endl;
 												}
 ;
-DIA		: DIAM EQUALS NUMBER SEMI {diametre = atoi($3); std::cout << "DIAM" << std::endl;}
+DIA		: DIAM EQUALS NUMBER SEMI {diametre = atoi($3);}
 ;
 REACT	: IDENT REACTID ARROW IDENT REACTID LB NUMBER RB SEMI {
 																EspeceMoleculaire *r1, *r2, *p1, *p2;
@@ -118,13 +114,11 @@ REACT	: IDENT REACTID ARROW IDENT REACTID LB NUMBER RB SEMI {
 																	}
 																}
 																reactions.push_back(new Reaction(r1, r2, p1, p2, dr, dp, atof($7)));
-																std::cout << "REACT" << std::endl;
 															 }
 ;
 REACTID	: {	char txt[1] = "";
-			$$ = txt;
-			std::cout << "REACTIDENT" << std::endl;}
-		| PLUS IDENT {$$ = $2; std::cout << "PLUS REACTIDENT" << std::endl;}
+			$$ = txt;}
+		| PLUS IDENT {$$ = $2;}
 ;
 SDECL	: DECL
 		| SDECL DECL

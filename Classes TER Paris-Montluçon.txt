@@ -24,8 +24,9 @@ CSV : Temps; Nb_Em1; Nb_Em2; ...; Nb_Emn; Nb_chocs;
 
 Arguments du programme : 
 	-f : Nom du fichier
-	-t : Temps total (en ms)
+	-t : Temps total (en µs)
 	-s : Type de simulation
+	-j : Saut d'étapes en sortie
 	
 
 Simulateur simple (Gillespie) : 
