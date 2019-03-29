@@ -1,5 +1,4 @@
-.vscode/settings.json
-.vscode/c_cpp_properties.json
+.vscode/*
 analyLex
 AnalyseurFlex.cpp
 parser.tab.cpp
