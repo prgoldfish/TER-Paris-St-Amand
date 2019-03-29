@@ -53,7 +53,7 @@ std::vector<double> simulationSimpleStep(double time)
 int getNbChocs(double proba, int nEm1, int nEm2, std::minstd_rand rng)
 {
 	double alpha = 7.4e-7;
-	double volume = 4.0 * (M_PI / 3.0) *  pow((double) diametre * 10e-3 / 2, 3.0);
+	double volume = 4.0 * (M_PI / 3.0) *  pow((double) diametre * 1e-3 / 2, 3.0);
 	double nb = proba * alpha * nEm1 * nEm2 / volume;
 	int nbChocs = (int) nb;
 	double decPart = nb - nbChocs;

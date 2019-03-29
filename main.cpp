@@ -144,7 +144,6 @@ int main (int argc, char** argv)
         r->~Reaction();
     }
 
-
     csv.fermerFichier();
 
     return 0;
