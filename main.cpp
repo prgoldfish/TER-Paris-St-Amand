@@ -15,8 +15,9 @@ extern FILE *yyin;
 int main (int argc, char** argv)
 {
     int a = 2;
+    int skip = 1;
     int nbIter = 100;
-    bool fileDone = false, timeDone = false, simultypeDone = false, entiteCentree = false;
+    bool fileDone = false, timeDone = false, simultypeDone = false, entiteCentree = false, jumpDone = false;
     while (argc > a) 
     {
         if(std::string(argv[a - 1]) == "-f" && !fileDone)
@@ -31,6 +32,16 @@ int main (int argc, char** argv)
             if(nbIter < 1)
             {
                std::cout << "Temps invalide. Le temps doit etre d'au moins 100 µs." << std::endl;
+               exit(0); 
+            }
+        }
+        else if(std::string(argv[a - 1]) == "-j" && !jumpDone)
+        {
+            skip = atoi(argv[a]) / 100;
+            jumpDone = true;
+            if(skip < 1)
+            {
+               std::cout << "Valeur de saut temporel invalide. Elle doit être supérieure ou égale à 100 µs. (La valeur est tronquée au 100 µs près)" << std::endl;
                exit(0); 
             }
         }
@@ -95,24 +106,31 @@ int main (int argc, char** argv)
     }
     else
     {
-         for(int j = 0; j < nbIter; j++)
+        int s = 1;
+        for(int j = 0; j < nbIter; j++)
         {    
             int i = 0;
 
             resultats = simulationSimpleStep(temps);
 
-            for(double d : resultats) 
+            if(s >= skip)
             {
-                std::cout << "Col " << i << " : " << d << std::endl;
-                i++;
+                s = 1;
+                for(double d : resultats) 
+                {
+                    std::cout << "Col " << i << " : " << d << std::endl;
+                    i++;
 
+                }
+                std::cout << std::endl << std::endl << std::endl;
+                
+                csv.ajouter(resultats);
             }
-
-            csv.ajouter(resultats);
-
+            else
+            {
+                s++;
+            }
             temps = resultats.front();
-
-            std::cout << std::endl << std::endl << std::endl;
         }
     }
 
