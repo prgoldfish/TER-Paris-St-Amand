@@ -1,6 +1,6 @@
 CXX=g++
 CFLAGS=-Wall -std=c++11
-LDFLAGS=-ll
+LDFLAGS=-ll -lboost_system
 EXEC=analyLex
 
 

@@ -6,6 +6,7 @@
 #include "Reaction.h"
 #include "SortieCSV.h"
 #include "Simulation.h"
+#include "customPlot/gnuplot-iostream.h"
 
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
