@@ -8,8 +8,9 @@ class SortieGraph{
 	private:
 		std::vector<std::vector<double>>  courbes;
 		std::vector<double> temps;
+		int tmax;
 	public:
-		SortieGraph(std::vector<EspeceMoleculaire*> especes);
+		SortieGraph(std::vector<EspeceMoleculaire*> especes, int tmax);
 		void ajouter(std::vector<double> valeurs);
 		void afficher();
 };

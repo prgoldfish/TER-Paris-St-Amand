@@ -97,7 +97,7 @@ int main (int argc, char** argv)
     SortieCSV csv;
     csv.initFichier(especes);
 
-    SortieGraph graph(especes);
+    SortieGraph graph(especes, nbIter * 100);
 
     double temps = 0;
     std::vector<double> resultats;
