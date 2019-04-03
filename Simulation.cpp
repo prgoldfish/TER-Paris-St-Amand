@@ -1,5 +1,4 @@
 #include "Simulation.h"
-
 #include <iostream>
 
 std::vector<double> simulationSimpleStep(double time)

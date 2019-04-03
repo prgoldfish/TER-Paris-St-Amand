@@ -10,6 +10,7 @@
 #include <cmath>
 #include "EspeceMoleculaire.h"
 #include "Reaction.h"
+#include "Molecule.h"
 
 extern int diametre;
 extern std::vector<EspeceMoleculaire*> especes;
@@ -18,6 +19,7 @@ extern std::vector<Reaction*> reactions;
 std::vector<double> simulationSimpleStep(double time);
 int getNbChocs(double proba, int nEm1, int nEm2, std::minstd_rand rng);
 int getNbReacs(double proba, int nEm, std::minstd_rand rng);
+
 
 
 
