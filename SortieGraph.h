@@ -10,6 +10,7 @@ class SortieGraph{
 	public:
 		SortieGraph(std::vector<EspeceMoleculaire*> especes);
 		void ajouter(std::vector<double> valeurs);
+		void afficher();
 };
 
 #endif
