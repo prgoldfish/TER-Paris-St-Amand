@@ -7,14 +7,15 @@
 namespace plt = matplotlibcpp;
 
 SortieGraph::SortieGraph(std::vector<EspeceMoleculaire*> especes){
-	courbes.resize(especes.size());
+	courbes.resize(especes.size() + 1);
 }
 
 void SortieGraph::ajouter(std::vector<double> valeurs){
 	plt::clf();
+	temps.push_back(valeurs.front());
 	for(unsigned int i = 0; i < courbes.size(); i++){
 		courbes[i].push_back(valeurs[i+1]);
-		plt::plot(courbes[i]);
+		plt::plot(temps, courbes[i]);
 	}
 	plt::pause(0.001);
 }
