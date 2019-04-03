@@ -149,6 +149,7 @@ int main (int argc, char** argv)
     }
 
     csv.fermerFichier();
+    graph.afficher();
 
     return 0;
 }
