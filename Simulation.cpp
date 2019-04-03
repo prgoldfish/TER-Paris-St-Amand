@@ -82,13 +82,14 @@ std::vector<Molecule> initSimulationEntitee(Environnement *env)
 	std::vector<Molecule> listeMolecules;
 	for(auto&& e : especes)
 	{
-		for(size_t i = 0; i < e->pop; i++)
+		for(int i = 0; i < e->pop; i++)
 		{
 			Molecule m(e);
 			listeMolecules.push_back(m);
 			env->ajoutMolecule(&m);
 		}
 	}
+	return listeMolecules;
 }
 
 std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::vector<Molecule> *listeMolecules, bool sens) //true pour debut->fin et false pour fin->debut 
@@ -97,8 +98,8 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 	std::vector<Molecule> listeMoleculesMaj;
 	for(auto&& m : *listeMolecules)
 	{
-		
+		m.getX();
 	}
 	
-
+	return results;
 }

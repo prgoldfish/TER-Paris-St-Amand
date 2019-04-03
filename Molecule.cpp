@@ -49,15 +49,15 @@ Environnement::Environnement()
     tailleCube = maxTaille();
     int nbCubes1D = ceil(tailleCube / (double) diametre);
     env3D = std::vector<std::vector<std::vector<std::vector<Molecule *>>>>();
-    for(size_t i = 0; i < nbCubes1D; i++)
+    for(int i = 0; i < nbCubes1D; i++)
     {
         std::vector<std::vector<std::vector<Molecule *>>> env2D;
         env3D.push_back(env2D);
-        for (size_t j = 0; j < nbCubes1D; j++)
+        for (int j = 0; j < nbCubes1D; j++)
         {
             std::vector<std::vector<Molecule *>> env1D;
             env2D.push_back(env1D);
-            for(size_t k = 0; k < nbCubes1D; k++)
+            for(int k = 0; k < nbCubes1D; k++)
             {
                 std::vector<Molecule *> listMolecules;
                 env1D.push_back(listMolecules);
