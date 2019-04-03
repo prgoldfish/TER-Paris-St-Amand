@@ -110,15 +110,22 @@ int main (int argc, char** argv)
     else
     {
         int s = 1;
+        int nbCollisions = 0;
         for(int j = 0; j < nbIter; j++)
         {    
-            int i = 0;
-
             resultats = simulationSimpleStep(temps);
+
+            nbCollisions += resultats.back();
 
             if(s >= skip)
             {
+                int i = 0;
                 s = 1;
+                
+                resultats.pop_back();
+                resultats.push_back(nbCollisions);
+                nbCollisions = 0;
+
                 for(double d : resultats) 
                 {
                     std::cout << "Col " << i << " : " << d << std::endl;
