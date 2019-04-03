@@ -6,12 +6,16 @@
 #include "Reaction.h"
 #include "SortieCSV.h"
 #include "Simulation.h"
-#include "customPlot/gnuplot-iostream.h"
+
+#define WITHOUT_NUMPY
+#include "customPlot/matplotlibcpp.h"
 
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
 std::vector<Reaction*> reactions;
 extern FILE *yyin;
+
+namespace plt = matplotlibcpp;
 
 int main (int argc, char** argv)
 {
@@ -146,6 +150,9 @@ int main (int argc, char** argv)
     }
 
     csv.fermerFichier();
+
+    plt::plot({1,3,2,4});
+    plt::show();
 
     return 0;
 }

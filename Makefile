@@ -1,6 +1,6 @@
 CXX=g++
 CFLAGS=-Wall -std=c++11
-LDFLAGS=-ll -lboost_system
+LDFLAGS=-ll -I/usr/include/python2.7 -lpython2.7
 EXEC=analyLex
 
 
