@@ -6,8 +6,8 @@ EXEC=analyLex
 
 all: $(EXEC)
 
-analyLex: parser.tab.o AnalyseurFlex.o main.o EspeceMoleculaire.o Reaction.o Simulation.o SortieCSV.o
-					$(CXX) AnalyseurFlex.o parser.tab.o main.o EspeceMoleculaire.o Reaction.o Simulation.o SortieCSV.o -o analyLex $(LDFLAGS)
+analyLex: parser.tab.o AnalyseurFlex.o main.o EspeceMoleculaire.o Reaction.o Simulation.o SortieCSV.o SortieGraph.o
+					$(CXX) AnalyseurFlex.o parser.tab.o main.o EspeceMoleculaire.o Reaction.o Simulation.o SortieCSV.o SortieGraph.o -o analyLex $(LDFLAGS)
 
 AnalyseurFlex.o : AnalyseurFlex.cpp
 					$(CXX) -o AnalyseurFlex.o -c AnalyseurFlex.cpp $(CFLAGS)
@@ -29,6 +29,9 @@ Simulation.o : Simulation.cpp Simulation.h
 
 SortieCSV.o : SortieCSV.cpp SortieCSV.h
 					$(CXX) -o SortieCSV.o -c SortieCSV.cpp $(CFLAGS)
+
+SortieGraph.o : SortieGraph.cpp SortieGraph.h
+					$(CXX) -o SortieGraph.o -c SortieGraph.cpp $(CFLAGS)
 
 
 AnalyseurFlex.cpp: AnalyseurFlex.l

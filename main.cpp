@@ -4,18 +4,14 @@
 #include "parser.tab.hpp"
 #include "EspeceMoleculaire.h"
 #include "Reaction.h"
-#include "SortieCSV.h"
 #include "Simulation.h"
-
-#define WITHOUT_NUMPY
-#include "customPlot/matplotlibcpp.h"
+#include "SortieCSV.h"
+#include "SortieGraph.h"
 
 int diametre;
 std::vector<EspeceMoleculaire*> especes;
 std::vector<Reaction*> reactions;
 extern FILE *yyin;
-
-namespace plt = matplotlibcpp;
 
 int main (int argc, char** argv)
 {
@@ -101,6 +97,8 @@ int main (int argc, char** argv)
     SortieCSV csv;
     csv.initFichier(especes);
 
+    SortieGraph graph(especes);
+
     double temps = 0;
     std::vector<double> resultats;
 
@@ -130,6 +128,7 @@ int main (int argc, char** argv)
                 std::cout << std::endl << std::endl << std::endl;
                 
                 csv.ajouter(resultats);
+                graph.ajouter(resultats);
             }
             else
             {
@@ -150,9 +149,6 @@ int main (int argc, char** argv)
     }
 
     csv.fermerFichier();
-
-    plt::plot({1,3,2,4});
-    plt::show();
 
     return 0;
 }
