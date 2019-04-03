@@ -14,17 +14,20 @@ class Molecule
 {
     private:
         double x, y, z;
+        double lastX, lastY, lastZ;
         EspeceMoleculaire *espece;
         static std::minstd_rand generator;
 
     public:
         bool traitee;
         Molecule(EspeceMoleculaire *e);
+        Molecule(EspeceMoleculaire *e, double x, double y, double z);
         ~Molecule(){}
         double getX(){return x;}
         double getY(){return y;}
         double getZ(){return z;}
-        void move(double vitesse);
+        void move();
+        void unmove();
 
 };
 
@@ -40,4 +43,6 @@ class Environnement
         std::vector<Molecule *> getListCoords(double x, double y, double z);
         std::vector<Molecule *> getListIndices(int i, int j, int k);
         std::vector<std::vector<std::vector<Molecule *>>>& operator[](size_t i){ return env3D[i];}
+        void ajoutMolecule(Molecule *m);
+        std::vector<Molecule *> findMolecule(Molecule *m);
 }

@@ -76,3 +76,29 @@ int getNbReacs(double proba, int nEm, std::minstd_rand rng)
 	}
 	return nbReacs;
 }
+
+std::vector<Molecule> initSimulationEntitee(Environnement *env)
+{
+	std::vector<Molecule> listeMolecules;
+	for(auto&& e : especes)
+	{
+		for(size_t i = 0; i < e->pop; i++)
+		{
+			Molecule m(e);
+			listeMolecules.push_back(m);
+			env->ajoutMolecule(&m);
+		}
+	}
+}
+
+std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::vector<Molecule> *listeMolecules, bool sens) //true pour debut->fin et false pour fin->debut 
+{
+	std::vector<double> results;
+	std::vector<Molecule> listeMoleculesMaj;
+	for(auto&& m : *listeMolecules)
+	{
+		
+	}
+	
+
+}
