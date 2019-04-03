@@ -96,6 +96,20 @@ std::vector<Molecule *> Environnement::findMolecule(Molecule *m)
     return  getListCoords(m->getX(), m->getY(), m->getZ());
 }
 
+void Environnement::removeMolecule(Molecule *m)
+{
+    std::vector<Molecule *> list = findMolecule(m);
+    for(size_t i = 0; i < list.size(); i++)
+    {
+        if(list[i] == m)
+        {
+            list.erase(list.begin() + i);
+        }
+    }
+    
+
+}
+
 int maxTaille()
 {
     int max = 0;

@@ -45,4 +45,5 @@ class Environnement
         std::vector<std::vector<std::vector<Molecule *>>>& operator[](size_t i){ return env3D[i];}
         void ajoutMolecule(Molecule *m);
         std::vector<Molecule *> findMolecule(Molecule *m);
+        void removeMolecule(Molecule *m);
 };

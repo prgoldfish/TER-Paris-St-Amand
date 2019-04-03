@@ -96,10 +96,15 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 {
 	std::vector<double> results;
 	std::vector<Molecule> listeMoleculesMaj;
-	for(auto&& m : *listeMolecules)
+	int nbMol = listeMolecules->size();
+	int i = (sens ? 0 : nbMol - 1);
+	
+	for(; sens ? (i < nbMol) : (i >= 0); sens ? i++ : i--)
 	{
-		m.getX();
+		//TODO : Tout le reste
 	}
+	
+	
 	
 	return results;
 }
