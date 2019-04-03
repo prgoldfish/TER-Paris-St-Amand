@@ -19,12 +19,15 @@ void SortieCSV::ajouter(std::vector<double> valeurs){
 			//ajouter une ligne
 			premier = false;
 			fichierCSV << std::endl;
+			//afficher le temps
+			fichierCSV << (int) v;
 		}else{
 			//ajouter une virgule
 			fichierCSV << ';';
+			//ajouter la valeur
+			fichierCSV << v;
 		}
-		//ajouter la valeur
-		fichierCSV << v;
+		
 	}
 }
 
