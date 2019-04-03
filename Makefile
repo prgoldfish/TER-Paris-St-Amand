@@ -33,6 +33,9 @@ SortieCSV.o : SortieCSV.cpp SortieCSV.h
 SortieGraph.o : SortieGraph.cpp SortieGraph.h
 					$(CXX) -o SortieGraph.o -c SortieGraph.cpp $(CFLAGS)
 
+Molecule.o : Molecule.cpp Molecule.h
+					$(CXX) -o Molecule.o -c Molecule.cpp $(CFLAGS)
+
 
 AnalyseurFlex.cpp: AnalyseurFlex.l
 					flex -o AnalyseurFlex.cpp AnalyseurFlex.l

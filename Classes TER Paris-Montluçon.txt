@@ -18,7 +18,6 @@ class Molecule :
 	float positionZ;
 	EspeceMoleculaire* espece;
 	bool traitee;
-	int noEspece;
 
 CSV : Temps; Nb_Em1; Nb_Em2; ...; Nb_Emn; Nb_chocs; 
 
@@ -50,3 +49,24 @@ Simulateur simple (Gillespie) :
 	L'ordre des réactions de doit pas être la même à chaque fois.
 	Faire un ordre aléatoire
 
+
+Entité-Centré :
+	On a une sphère remplie de molécules
+	Elle a un diamètre.
+	Les molécules aussi.
+	Créer la liste de chaque molécule.
+	Lors de l'init : Placer les molécules à la suite dans la sphère. ?
+	A chaque pas de temps : 
+		On fait avancer la molécule: 
+			Elle va dans un endroit vide : Ok
+			Elle tamponne une autre molécule : On fait la réaction (avec la proba ?)
+			Elle sort de la sphère : Elle bouge pas
+		Mélanger la liste de molécule à chaque itération ou changer le sens parcours du vecteur(Début->Fin  ==> Fin->Début)
+		On met la molécule à traitee=true et pareil pour la molécule tamponée
+		Pour faire avancer la molécule, on peut prendre la plus grande vitesse et faire une probabilité de déplacement.
+		Pas de réaction si la molécule tamponée est déjà traitée et la molécule bouge pas.
+		Le booléen pour traitée est différent si on va de haut en bas ou de bas en haut.
+	On peut faire un système de grille 3D ou chaque cube aurait la taille de (+ grosse molécule)
+		Elle peut se déplace d'une case maxi.
+		On compare donc aux molécules dans les cubes autour d'elle plutôt que toutes les molécules
+	
