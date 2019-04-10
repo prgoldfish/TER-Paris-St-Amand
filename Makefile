@@ -1,6 +1,6 @@
 CXX=g++
-CFLAGS=-Wall -std=c++11
-LDFLAGS=-ll -I/usr/include/python2.7 -lpython2.7
+CFLAGS=-Wall -std=c++11 -I/usr/include/python2.7
+LDFLAGS=-ll -lpython2.7
 EXEC=analyLex
 
 
