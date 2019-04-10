@@ -1,7 +1,5 @@
 #include "SortieGraph.h"
 
-#define WITHOUT_NUMPY
-
 #include "customPlot/matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
