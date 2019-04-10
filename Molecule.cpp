@@ -1,4 +1,5 @@
 #include "Molecule.h"
+#include <iostream>
 
 
 std::minstd_rand Molecule::generator(std::chrono::system_clock::now().time_since_epoch().count());
@@ -47,23 +48,22 @@ void Molecule::unmove()
 Environnement::Environnement()
 {
     tailleCube = maxTaille();
-    int nbCubes1D = ceil(tailleCube / (double) diametre);
-    env3D = std::vector<std::vector<std::vector<std::vector<Molecule *>>>>();
+    int nbCubes1D = ceil(diametre / (double) tailleCube);
     for(int i = 0; i < nbCubes1D; i++)
     {
         std::vector<std::vector<std::vector<Molecule *>>> env2D;
-        env3D.push_back(env2D);
+        
         for (int j = 0; j < nbCubes1D; j++)
         {
             std::vector<std::vector<Molecule *>> env1D;
-            env2D.push_back(env1D);
             for(int k = 0; k < nbCubes1D; k++)
             {
                 std::vector<Molecule *> listMolecules;
                 env1D.push_back(listMolecules);
             }
-            
+            env2D.push_back(env1D);
         }
+        env3D.push_back(env2D);
     }    
 }
 

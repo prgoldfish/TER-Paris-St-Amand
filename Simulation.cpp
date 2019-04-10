@@ -98,8 +98,11 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 	std::shuffle(reactions.begin(), reactions.end(), generator);
 	
 	std::vector<double> results;
+	results.push_back(time + 100);
+
 	std::vector<Molecule> listeMoleculesMaj;
 	
+	int nbReactions = 0;
 	int nbMol = listeMolecules->size();
 	int i = (sens ? 0 : nbMol - 1);
 	
@@ -122,36 +125,60 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 		Reaction *r = reaction.second;
 		if(r) // Si il y a une réaction
 		{
+			nbReactions++;
+			Molecule p1 = Molecule(r->getProduit1(), m->getX(), m->getY(), m->getZ());
+			m->traitee = sens;
+			env->removeMolecule(m); 
+			env->ajoutMolecule(&p1);
+			m->getEspece()->pop--;
+			p1.getEspece()->pop++;
 			if(molReac) // Bi-moléculaire
 			{
-				Molecule p1 = Molecule(r->getProduit1(), m->getX(), m->getY(), m->getZ());
-				Molecule p2 = r->get2Produits() ? Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ()) : NULL;
-				if(sens)
-				{
-					listeMoleculesMaj.push_back(p1);
-					if(p2)
-					{
-						listeMoleculesMaj.push_back(p1);
-					}
-				}
-				else
-				{
-					/* code */
-				}
+				molReac->traitee = sens; 
+				env->removeMolecule(molReac);	
+				molReac->getEspece()->pop--;
+				
 				
 			}
-			else // Mono-moléculaire
+			if(sens) // Le sens d'insertion dans la nouvelle liste change en fonction du sens de lecture
 			{
-				/* code */
+				listeMoleculesMaj.push_back(p1);
+				if(r->get2Produits())
+				{
+					Molecule p2 = Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ());
+					listeMoleculesMaj.push_back(p2);
+					env->ajoutMolecule(&p2);
+					p2.getEspece()->pop++;
+				}
 			}
-			
+			else
+			{
+				listeMoleculesMaj.insert(listeMoleculesMaj.begin(), p1);
+				if(r->get2Produits())
+				{
+					Molecule p2 = Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ());
+					listeMoleculesMaj.insert(listeMoleculesMaj.begin(), p2);
+					env->ajoutMolecule(&p2);
+					p2.getEspece()->pop++;
+				}
+			}
 		}
-		
-
+		else
+		{
+			env->removeMolecule(m);
+			env->ajoutMolecule(m);
+		}
 	}
+	*listeMolecules = listeMoleculesMaj;
 	
 	
-	
+	for(EspeceMoleculaire *e : especes)
+    {
+        results.push_back(e->pop);
+    }
+
+	results.push_back((double) nbReactions);
+
 	return results;
 }
 

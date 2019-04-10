@@ -67,7 +67,7 @@ Entité-Centré :
 		Pas de réaction si la molécule tamponée est déjà traitée et la molécule bouge pas.
 		Le booléen pour traitée est différent si on va de haut en bas ou de bas en haut.
 	On peut faire un système de grille 3D ou chaque cube aurait la taille de (+ grosse molécule)
-		Elle peut se déplace d'une case maxi. (Hypothèse)
+		Elle peut se déplacer d'une case maxi. (Hypothèse)
 		On compare donc aux molécules dans les cubes autour d'elle plutôt que toutes les molécules
 	
 
@@ -76,4 +76,3 @@ Entité-Centré :
 Dans le rapport : 
 	Décrire l'énoncé
 	Comment on a fait ce qu'on a fait
-	

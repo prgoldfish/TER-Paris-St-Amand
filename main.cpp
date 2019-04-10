@@ -101,48 +101,54 @@ int main (int argc, char** argv)
 
     double temps = 0;
     std::vector<double> resultats;
+    Environnement env;
+    std::vector<Molecule> listeMol = initSimulationEntitee(&env);
+    bool sens = true;
+
 
     std::cout << "Après une étape : " << std::endl;
-
-    if (entiteCentree) {
-        /* code */
-    }
-    else
-    {
-        int s = 1;
-        int nbCollisions = 0;
-        for(int j = 0; j < nbIter; j++)
-        {    
-            resultats = simulationSimpleStep(temps);
-
-            nbCollisions += resultats.back();
-
-            if(s >= skip)
-            {
-                int i = 0;
-                s = 1;
-                
-                resultats.pop_back();
-                resultats.push_back(nbCollisions);
-                nbCollisions = 0;
-
-                for(double d : resultats) 
-                {
-                    std::cout << "Col " << i << " : " << d << std::endl;
-                    i++;
-
-                }
-                std::cout << std::endl << std::endl << std::endl;
-                
-                csv.ajouter(resultats);
-                graph.ajouter(resultats);
-            }
-            else
-            {
-                s++;
-            }
-            temps = resultats.front();
+        
+    int s = 1;
+    int nbCollisions = 0;
+    for(int j = 0; j < nbIter; j++)
+    {    
+        if(entiteCentree)
+        {
+            resultats = simulationEntiteeStep(temps, &env, &listeMol, sens);
+            sens = !sens;
         }
+        else
+        {
+            resultats = simulationSimpleStep(temps);
+        }
+
+        nbCollisions += resultats.back();
+
+        if(s >= skip)
+        {
+            int i = 0;
+            s = 1;
+            
+            resultats.pop_back();
+            resultats.push_back(nbCollisions);
+            nbCollisions = 0;
+
+            for(double d : resultats) 
+            {
+                std::cout << "Col " << i << " : " << d << std::endl;
+                i++;
+
+            }
+            std::cout << std::endl << std::endl << std::endl;
+            
+            csv.ajouter(resultats);
+            graph.ajouter(resultats);
+        }
+        else
+        {
+            s++;
+        }
+        temps = resultats.front();
     }
 
     for(auto e : especes)
