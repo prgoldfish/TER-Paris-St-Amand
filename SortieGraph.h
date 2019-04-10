@@ -8,6 +8,7 @@ class SortieGraph{
 	private:
 		std::vector<std::vector<double>>  courbes; // données des courbes
 		std::vector<double> temps; // valeurs de temps correspondantes
+		std::string * noms; // noms des courbes
 		int tmax; // temps de fin du graphe
 	public:
 		SortieGraph(std::vector<EspeceMoleculaire*> especes, int tmax); // initialise le graphe avec les données de la situation initiale
