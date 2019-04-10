@@ -6,13 +6,13 @@
 
 class SortieGraph{
 	private:
-		std::vector<std::vector<double>>  courbes;
-		std::vector<double> temps;
-		int tmax;
+		std::vector<std::vector<double>>  courbes; // données des courbes
+		std::vector<double> temps; // valeurs de temps correspondantes
+		int tmax; // temps de fin du graphe
 	public:
-		SortieGraph(std::vector<EspeceMoleculaire*> especes, int tmax);
-		void ajouter(std::vector<double> valeurs);
-		void afficher();
+		SortieGraph(std::vector<EspeceMoleculaire*> especes, int tmax); // initialise le graphe avec les données de la situation initiale
+		void ajouter(std::vector<double> valeurs); // ajoute des données au graphe et les affiche au fur à mesure
+		void afficher(); // met le programme en pause pour afficher le graphe et attend que l'utilisateur le ferme
 };
 
 #endif
