@@ -107,30 +107,44 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 	{
 		//TODO : Tout le reste
 		Molecule *m = &(listeMolecules->at(i));
-		m->move();
-		int mI, mJ, mK;
-		std::tie(mI, mJ, mK) = env->coords2Indices(m->getX(), m->getY(), m->getZ());
-		for(int envI = mI - 1; envI <= mI + 1; envI++)
+		if(m->traitee == sens) // Si la molécule est déjà traitée
 		{
-			if(envI < 0 || envI >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+			continue;
+		}
+		m->move();
+		if(m->getR() > (diametre / 2))
+		{
+			m->unmove();
+			m->traitee = sens;
+		}
+		std::pair<Molecule *, Reaction *> reaction = checkCollisionsAndReac(env, m, generator, sens);
+		Molecule *molReac = reaction.first;
+		Reaction *r = reaction.second;
+		if(r) // Si il y a une réaction
+		{
+			if(molReac) // Bi-moléculaire
 			{
-				continue;
-			}
-			for(int envJ = mJ - 1; envJ <= mJ + 1; envJ++)
-			{
-				if(envJ < 0 || envJ >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+				Molecule p1 = Molecule(r->getProduit1(), m->getX(), m->getY(), m->getZ());
+				Molecule p2 = r->get2Produits() ? Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ()) : NULL;
+				if(sens)
 				{
-					continue;
-				}
-				for(int envK = mK - 1; envK <= mK + 1; envK++)
-				{
-					if(envK < 0 || envK >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+					listeMoleculesMaj.push_back(p1);
+					if(p2)
 					{
-						continue;
+						listeMoleculesMaj.push_back(p1);
 					}
-					
 				}
+				else
+				{
+					/* code */
+				}
+				
 			}
+			else // Mono-moléculaire
+			{
+				/* code */
+			}
+			
 		}
 		
 
@@ -184,4 +198,67 @@ Reaction* getReactionMono(Molecule *m)
 		}
 	}
 	return NULL;	
+}
+
+std::pair<Molecule*, Reaction *> checkCollisionsAndReac(Environnement *env, Molecule *m, std::minstd_rand rng, bool sens)
+{
+	int mI, mJ, mK;
+	std::tie(mI, mJ, mK) = env->coords2Indices(m->getX(), m->getY(), m->getZ());
+	std::uniform_real_distribution<double> distribution(0.0, 1.0);
+	for(int envI = mI - 1; envI <= mI + 1; envI++)
+	{
+		if(envI < 0 || envI >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+		{
+			continue;
+		}
+		for(int envJ = mJ - 1; envJ <= mJ + 1; envJ++)
+		{
+			if(envJ < 0 || envJ >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+			{
+				continue;
+			}
+			for(int envK = mK - 1; envK <= mK + 1; envK++)
+			{
+				if(envK < 0 || envK >= env->cubeSize()) // Pour vérifier que l'on ne déborde pas du cube
+				{
+					continue;
+				}
+				std::vector<Molecule*> listMol = env->getListIndices(envI, envJ, envK);
+				for(auto&& molVoisine : listMol)
+				{
+					if(collision(m, molVoisine)) // Si on tamponne une autre molécule
+					{
+						Reaction *rBi = getReactionBi(m, molVoisine);
+						if(rBi && distribution(rng) < rBi->getProba() && molVoisine->traitee != sens) // Si une réaction bi-moléculaire se produit et que la seconde molécule n'est pas déjà traitée
+						{
+							return std::pair<Molecule*, Reaction *>(molVoisine, rBi);
+						}
+						else // Si ça ne réagit pas
+						{
+							m->unmove(); //On remet la molécule à sa place initiale
+							return std::pair<Molecule*, Reaction *>(NULL, checkReactionMono(m, rng)); // On vérifie si une réaction mono-moléculaire se produit
+						}
+					}
+				}				
+			}
+		}
+	}
+
+	//Si la molécule n'a tamponné aucune molécule
+	return std::pair<Molecule*, Reaction *>(NULL, checkReactionMono(m, rng));
+
+}
+
+Reaction* checkReactionMono(Molecule *m, std::minstd_rand rng)
+{
+	Reaction *rMono = getReactionMono(m);
+	std::uniform_real_distribution<double> distribution(0.0, 1.0);
+	if(rMono && distribution(rng) < rMono->getProba()) // Si une réaction Mono-moléculaire se produit
+	{
+		return rMono;
+	}
+	else
+	{
+		return NULL;;
+	}
 }

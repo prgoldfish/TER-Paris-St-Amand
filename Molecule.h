@@ -27,6 +27,7 @@ class Molecule
         double getX(){return x;}
         double getY(){return y;}
         double getZ(){return z;}
+        double getR(){double sqR = x*x + y*y + z*z; return sqrt(sqR);}
         EspeceMoleculaire *getEspece(){return espece;}
         void move();
         void unmove();
