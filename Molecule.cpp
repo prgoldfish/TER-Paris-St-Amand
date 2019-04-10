@@ -75,6 +75,15 @@ std::vector<Molecule *> Environnement::getListIndices(int i, int j, int k)
 std::vector<Molecule *> Environnement::getListCoords(double x, double y, double z)
 {
     //Translation des coordonées de la molécules en indices de la grille 3D
+    std::tuple<int, int, int> ind = coords2Indices(x, y, z);
+    int i = std::get<0>(ind);
+    int j = std::get<1>(ind);
+    int k = std::get<2>(ind);
+    return env3D[i][j][k];
+}
+
+std::tuple<int, int, int> Environnement::coords2Indices(double x, double y, double z)
+{
     int i = x + diametre / 2; //On met l'origine dans le même coin que celui de env3D
     int j = x + diametre / 2;
     int k = x + diametre / 2;
@@ -82,9 +91,8 @@ std::vector<Molecule *> Environnement::getListCoords(double x, double y, double 
     j /= tailleCube;
     k /= tailleCube;
 
-    return env3D[i][j][k];
+    return std::tuple<int, int, int>(i, j, k);
 }
-
 
 void Environnement::ajoutMolecule(Molecule *m)
 {

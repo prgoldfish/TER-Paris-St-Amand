@@ -1,6 +1,7 @@
 #include <random>
 #include <chrono>
 #include <vector>
+#include <tuple>
 
 #include "EspeceMoleculaire.h"
 
@@ -26,6 +27,7 @@ class Molecule
         double getX(){return x;}
         double getY(){return y;}
         double getZ(){return z;}
+        EspeceMoleculaire *getEspece(){return espece;}
         void move();
         void unmove();
 
@@ -42,7 +44,9 @@ class Environnement
         ~Environnement(){}
         std::vector<Molecule *> getListCoords(double x, double y, double z);
         std::vector<Molecule *> getListIndices(int i, int j, int k);
+        std::tuple<int, int, int> coords2Indices(double x, double y, double z);
         std::vector<std::vector<std::vector<Molecule *>>>& operator[](size_t i){ return env3D[i];}
+        int cubeSize(){return env3D.size();}
         void ajoutMolecule(Molecule *m);
         std::vector<Molecule *> findMolecule(Molecule *m);
         void removeMolecule(Molecule *m);
