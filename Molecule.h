@@ -2,6 +2,7 @@
 #include <chrono>
 #include <vector>
 #include <tuple>
+#include <algorithm>
 
 #include "EspeceMoleculaire.h"
 
@@ -10,6 +11,8 @@ extern int diametre;
 extern std::vector<EspeceMoleculaire*> especes;
 
 int maxTaille();
+
+class Environnement;
 
 class Molecule
 {
@@ -29,8 +32,8 @@ class Molecule
         double getZ(){return z;}
         double getR(){double sqR = x*x + y*y + z*z; return sqrt(sqR);}
         EspeceMoleculaire *getEspece(){return espece;}
-        void move();
-        void unmove();
+        bool move(Environnement *env);
+        void unmove(Environnement *env);
 
 };
 
@@ -43,12 +46,14 @@ class Environnement
     public:
         Environnement();
         ~Environnement(){}
-        std::vector<Molecule *> getListCoords(double x, double y, double z);
-        std::vector<Molecule *> getListIndices(int i, int j, int k);
+        std::vector<Molecule *>& getListCoords(double x, double y, double z);
+        std::vector<Molecule *>& getListIndices(int i, int j, int k);
         std::tuple<int, int, int> coords2Indices(double x, double y, double z);
         std::vector<std::vector<std::vector<Molecule *>>>& operator[](size_t i){ return env3D[i];}
         int cubeSize(){return env3D.size();}
         void ajoutMolecule(Molecule *m);
-        std::vector<Molecule *> findMolecule(Molecule *m);
+        std::vector<Molecule *>& findMolecule(Molecule *m);
         void removeMolecule(Molecule *m);
 };
+
+void rechercheTotale(Molecule *m, Environnement *env);

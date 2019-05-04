@@ -71,7 +71,7 @@ int main (int argc, char** argv)
     yy::parser parser;
     parser.parse();
 
-    for(EspeceMoleculaire *e : especes)
+    /*for(EspeceMoleculaire *e : especes)
     {
         std::cout << "Molecule : " << std::endl;
         std::cout << "\tNom : " << e->getNom() << std::endl;
@@ -93,7 +93,7 @@ int main (int argc, char** argv)
     }
 
     std::cout << "Diametre : " << diametre << std::endl << std::endl;
-
+*/
     SortieCSV csv;
     csv.initFichier(especes);
 
@@ -102,11 +102,49 @@ int main (int argc, char** argv)
     double temps = 0;
     std::vector<double> resultats;
     Environnement env;
-    std::vector<Molecule> listeMol = initSimulationEntitee(&env);
+    std::vector<Molecule *> listeMol = initSimulationEntitee(&env);
+    /*std::cout << "Nombre de molécules : " << listeMol.size() << std::endl;
+    
+    for(Molecule m : listeMol)
+    {
+        std::cout << "Molecule : " << std::endl;
+        std::cout << "\tX : " << m.getX() << std::endl;
+        std::cout << "\tY : " <<m.getY() << std::endl;
+        std::cout << "\tZ : " << m.getZ() << std::endl;
+        std::cout << "\tEspèce : " << m.getEspece()->getNom() << std::endl << std::endl;
+    }
+
+    
+    std::cout << "Liste de molécules : " << env.findMolecule(&(listeMol[0]))->size() << std::endl; */
+    int sum = 0;
+    for(int i = 0; i < env.cubeSize(); i++)
+    {
+        for(int j = 0; j < env.cubeSize(); j++)
+        {
+            for(int k = 0; k < env.cubeSize(); k++)
+            {
+                sum += env.getListIndices(i, j, k).size();
+            }
+        }
+    }
+    
+    
+    std::cout << "NB Mol : " << sum << std::endl;
+
+    std::vector<Molecule*> listMol = env.findMolecule(listeMol[0]);
+    for(size_t molI = 0; molI < listMol.size(); molI++) 
+    {
+        std::cout << listMol.at(molI) << std::endl;
+        std::cout << listMol.at(molI)->getEspece()->getNom() << std::endl;
+    }
+    std::cout << listeMol[0] << std::endl;
+    
+
     bool sens = true;
 
 
     std::cout << "Après une étape : " << std::endl;
+    std::cout << "Taille cube : " << env.cubeSize() << std::endl;
         
     int s = 1;
     int nbCollisions = 0;
@@ -114,8 +152,9 @@ int main (int argc, char** argv)
     {    
         if(entiteCentree)
         {
-            resultats = simulationEntiteeStep(temps, &env, &listeMol, sens);
+            resultats = simulationEntiteeStep(temps, &env, listeMol, sens);
             sens = !sens;
+            //std::cout << "endStep" << std::endl;
         }
         else
         {
@@ -133,14 +172,14 @@ int main (int argc, char** argv)
             resultats.push_back(nbCollisions);
             nbCollisions = 0;
 
-            for(double d : resultats) 
+            /*for(double d : resultats) 
             {
                 std::cout << "Col " << i << " : " << d << std::endl;
                 i++;
 
             }
             std::cout << std::endl << std::endl << std::endl;
-            
+            */
             csv.ajouter(resultats);
             graph.ajouter(resultats);
         }
@@ -151,14 +190,19 @@ int main (int argc, char** argv)
         temps = resultats.front();
     }
 
-    for(auto e : especes)
+    for(auto&& e : especes)
     {
-        e->~EspeceMoleculaire();
+        delete e;
     }
 
-    for(auto r : reactions)
+    for(auto&& r : reactions)
     {
-        r->~Reaction();
+        delete r;
+    }
+
+    for(auto&& mol : listeMol)
+    {
+        delete mol;
     }
 
     csv.fermerFichier();

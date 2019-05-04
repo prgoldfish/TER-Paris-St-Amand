@@ -77,22 +77,22 @@ int getNbReacs(double proba, int nEm, std::minstd_rand rng)
 	return nbReacs;
 }
 
-std::vector<Molecule> initSimulationEntitee(Environnement *env)
+std::vector<Molecule *> initSimulationEntitee(Environnement *env)
 {
-	std::vector<Molecule> listeMolecules;
+	std::vector<Molecule *> listeMolecules;
 	for(auto&& e : especes)
 	{
 		for(int i = 0; i < e->pop; i++)
 		{
-			Molecule m(e);
+			Molecule *m = new Molecule(e);
 			listeMolecules.push_back(m);
-			env->ajoutMolecule(&m);
+			env->ajoutMolecule(m);
 		}
 	}
 	return listeMolecules;
 }
 
-std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::vector<Molecule> *listeMolecules, bool sens) //true pour debut->fin et false pour fin->debut 
+std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::vector<Molecule *> &listeMolecules, bool sens) //true pour debut->fin et false pour fin->debut 
 {
 	std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
 	std::shuffle(reactions.begin(), reactions.end(), generator);
@@ -100,25 +100,37 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 	std::vector<double> results;
 	results.push_back(time + 100);
 
-	std::vector<Molecule> listeMoleculesMaj;
+	std::vector<Molecule *> listeMoleculesMaj;
 	
 	int nbReactions = 0;
-	int nbMol = listeMolecules->size();
+	int nbMol = listeMolecules.size();
 	int i = (sens ? 0 : nbMol - 1);
+
+	std::vector<Molecule *> aSuppr;
+
+	int molEnlevees = 0;
+	int molAjouteesEnv = 0;
+	int molCrees = 0;
 	
 	for(; sens ? (i < nbMol) : (i >= 0); sens ? i++ : i--)
 	{
-		//TODO : Tout le reste
-		Molecule *m = &(listeMolecules->at(i));
+		Molecule *m = listeMolecules.at(i);
 		if(m->traitee == sens) // Si la molécule est déjà traitée
 		{
 			continue;
 		}
-		m->move();
-		if(m->getR() > (diametre / 2))
+		if(!m->move(env))
 		{
-			m->unmove();
 			m->traitee = sens;
+			if(sens) // Le sens d'insertion dans la nouvelle liste change en fonction du sens de lecture
+			{
+				listeMoleculesMaj.push_back(m);
+			}
+			else
+			{
+				listeMoleculesMaj.insert(listeMoleculesMaj.begin(), m);
+			}
+			continue;
 		}
 		std::pair<Molecule *, Reaction *> reaction = checkCollisionsAndReac(env, m, generator, sens);
 		Molecule *molReac = reaction.first;
@@ -126,29 +138,25 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 		if(r) // Si il y a une réaction
 		{
 			nbReactions++;
-			Molecule p1 = Molecule(r->getProduit1(), m->getX(), m->getY(), m->getZ());
-			m->traitee = sens;
-			env->removeMolecule(m); 
-			env->ajoutMolecule(&p1);
-			m->getEspece()->pop--;
-			p1.getEspece()->pop++;
-			if(molReac) // Bi-moléculaire
-			{
-				molReac->traitee = sens; 
-				env->removeMolecule(molReac);	
-				molReac->getEspece()->pop--;
-				
-				
-			}
+			Molecule *p1 = new Molecule(r->getProduit1(), m->getX(), m->getY(), m->getZ());
+			molCrees++;
+			env->ajoutMolecule(p1);
+			molAjouteesEnv++;
+			p1->getEspece()->pop++;
+			p1->traitee = sens;
+			
 			if(sens) // Le sens d'insertion dans la nouvelle liste change en fonction du sens de lecture
 			{
 				listeMoleculesMaj.push_back(p1);
 				if(r->get2Produits())
 				{
-					Molecule p2 = Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ());
+					Molecule *p2 = new Molecule(r->getProduit2(), m->getX(), m->getY(), m->getZ());
+					molCrees++;
+					p2->traitee = sens;
 					listeMoleculesMaj.push_back(p2);
-					env->ajoutMolecule(&p2);
-					p2.getEspece()->pop++;
+					env->ajoutMolecule(p2);
+					molAjouteesEnv++;
+					p2->getEspece()->pop++;
 				}
 			}
 			else
@@ -156,26 +164,64 @@ std::vector<double> simulationEntiteeStep(double time, Environnement *env, std::
 				listeMoleculesMaj.insert(listeMoleculesMaj.begin(), p1);
 				if(r->get2Produits())
 				{
-					Molecule p2 = Molecule(r->getProduit2(), molReac->getX(), molReac->getY(), molReac->getZ());
+					Molecule *p2 = new Molecule(r->getProduit2(), m->getX(), m->getY(), m->getZ());
+					p2->traitee = sens;
 					listeMoleculesMaj.insert(listeMoleculesMaj.begin(), p2);
-					env->ajoutMolecule(&p2);
-					p2.getEspece()->pop++;
+					env->ajoutMolecule(p2);
+					p2->getEspece()->pop++;
+				}
+			}
+
+			env->removeMolecule(m);
+			molEnlevees++;
+			m->getEspece()->pop--;
+			m->traitee = sens;
+			if(std::find(aSuppr.begin(), aSuppr.end(), m) == aSuppr.end())
+			{
+				aSuppr.push_back(m);
+			}
+			
+			if(molReac) // Bi-moléculaire
+			{
+				env->removeMolecule(molReac);	
+				molEnlevees++;
+				molReac->getEspece()->pop--;
+				molReac->traitee = sens;
+				if(std::find(aSuppr.begin(), aSuppr.end(), molReac) == aSuppr.end())
+				{
+					aSuppr.push_back(molReac);
 				}
 			}
 		}
 		else
 		{
-			env->removeMolecule(m);
-			env->ajoutMolecule(m);
+			if(sens) // Le sens d'insertion dans la nouvelle liste change en fonction du sens de lecture
+			{
+				listeMoleculesMaj.push_back(m);
+			}
+			else
+			{
+				listeMoleculesMaj.insert(listeMoleculesMaj.begin(), m);
+			}
+			m->traitee = sens;
 		}
 	}
-	*listeMolecules = listeMoleculesMaj;
+	//std::cout << "Nombre de molécules Maj : " << listeMoleculesMaj.size() << std::endl;
+	listeMolecules = listeMoleculesMaj;
 	
 	
 	for(EspeceMoleculaire *e : especes)
     {
         results.push_back(e->pop);
     }
+/*	std::cout << "Mol enlevées de env :" << molEnlevees << std::endl;
+	std::cout << "Mol a supprimer :" << aSuppr.size() << std::endl;
+	std::cout << "Mol ajoutees a env :" << molAjouteesEnv << std::endl;
+	std::cout << "Mol crees :" << molCrees << std::endl;*/
+	for(Molecule *mol : aSuppr)
+	{
+		delete mol;
+	}
 
 	results.push_back((double) nbReactions);
 
@@ -201,11 +247,25 @@ Reaction* getReactionBi(Molecule *m1, Molecule *m2)
 	{
 		for(auto&& r : reactions)
 		{
-			EspeceMoleculaire *r1 = r->getReac1();
-			EspeceMoleculaire *r2 = r->getReac2();
-			if((r1 == m1->getEspece() && r2 == m2->getEspece()) || (r1 == m2->getEspece() && r2 == m1->getEspece()))
-			{
-				return r;
+			if (r->get2Reac()) {
+			
+				EspeceMoleculaire *r1 = r->getReac1();
+				EspeceMoleculaire *r2 = r->getReac2();
+				
+				/*std::cout << r1 << std::endl; 
+				std::cout << r1->getNom() << std::endl;
+				std::cout << r2 << std::endl; 
+				std::cout << r2->getNom() << std::endl;
+				std::cout << m1->getEspece() << std::endl; 
+				std::cout << m1->getEspece()->getNom() << std::endl;
+				std::cout << m2->getEspece() << std::endl;
+				std::cout << m2->getEspece()->getNom() << std::endl;*/
+
+				if((r1 == m1->getEspece() && r2 == m2->getEspece()) || (r1 == m2->getEspece() && r2 == m1->getEspece()))
+				{
+					//std::cout << "OK" << std::endl;
+					return r;
+				}
 			}
 		}
 	}
@@ -218,6 +278,11 @@ Reaction* getReactionMono(Molecule *m)
 	{
 		for(auto&& r : reactions)
 		{
+			/*if(!r->get2Reac())
+			{
+				std::cout << r->getReac1() << "\t" << r->getReac1()->getNom() << std::endl;
+				std::cout << m->getEspece() << "\t" << m->getEspece()->getNom() << std::endl;
+			}*/
 			if(!r->get2Reac() && r->getReac1() == m->getEspece())
 			{
 				return r;
@@ -250,19 +315,21 @@ std::pair<Molecule*, Reaction *> checkCollisionsAndReac(Environnement *env, Mole
 				{
 					continue;
 				}
-				std::vector<Molecule*> listMol = env->getListIndices(envI, envJ, envK);
+				std::vector<Molecule*> &listMol = env->getListIndices(envI, envJ, envK);
 				for(auto&& molVoisine : listMol)
 				{
 					if(collision(m, molVoisine)) // Si on tamponne une autre molécule
 					{
+						//std::cout << "COLLISION !!!" << std::endl;
 						Reaction *rBi = getReactionBi(m, molVoisine);
 						if(rBi && distribution(rng) < rBi->getProba() && molVoisine->traitee != sens) // Si une réaction bi-moléculaire se produit et que la seconde molécule n'est pas déjà traitée
 						{
+							//std::cout << "BI-MOLECULAIRE !!!" << std::endl;
 							return std::pair<Molecule*, Reaction *>(molVoisine, rBi);
 						}
 						else // Si ça ne réagit pas
 						{
-							m->unmove(); //On remet la molécule à sa place initiale
+							m->unmove(env); //On remet la molécule à sa place initiale
 							return std::pair<Molecule*, Reaction *>(NULL, checkReactionMono(m, rng)); // On vérifie si une réaction mono-moléculaire se produit
 						}
 					}
@@ -282,10 +349,13 @@ Reaction* checkReactionMono(Molecule *m, std::minstd_rand rng)
 	std::uniform_real_distribution<double> distribution(0.0, 1.0);
 	if(rMono && distribution(rng) < rMono->getProba()) // Si une réaction Mono-moléculaire se produit
 	{
+		//std::cout << "MONO-MOLECULAIRE !!!" << std::endl;
 		return rMono;
 	}
 	else
 	{
-		return NULL;;
+		//std::cout << "RIEN !!!" << std::endl;
+		//std::cout << rMono << std::endl;
+		return NULL;
 	}
 }

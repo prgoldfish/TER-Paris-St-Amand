@@ -32,7 +32,7 @@ void SortieGraph::ajouter(std::vector<double> valeurs){
 	}
 	plt::legend(); // ajoute la légende
 	plt::ylim((int) (max * -0.01), (int) (max * 1.01)); // ajuste l'échelle en fonction de max (avec 1/100 d'écart pour empêcher les bords de couvrir des portions de courbes)
-	plt::pause(0.001); // affiche la courbe
+	plt::pause(0.00001); // affiche la courbe
 }
 
 void SortieGraph::afficher(){
