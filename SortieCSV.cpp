@@ -1,36 +1,43 @@
 #include "SortieCSV.h"
 
-void SortieCSV::initFichier(std::vector<EspeceMoleculaire*> especes){
-	fichierCSV.open("resultat.csv", std::ios::trunc);
-	//première ligne : noms des colonnes
-	fichierCSV << "\"temps\""; //première colonne correspond au temps
-    for(EspeceMoleculaire *e : especes) fichierCSV << ";\"" << e->getNom() << '"'; //liste des espèces séparées par des virgules et entourées de guillemets
+void SortieCSV::initFichier(std::vector<EspeceMoleculaire*> especes) // Crée un fichier CSV pour y mettre les resultats
+{
+	fichierCSV.open("resultat.csv", std::ios::trunc); 
+	// Première ligne : noms des colonnes
+	fichierCSV << "\"temps\""; //La première colonne correspond au temps
+    for(EspeceMoleculaire *e : especes) fichierCSV << ";\"" << e->getNom() << '"'; //La liste des espèces est séparée par des virgules et entourée de guillemets
 	fichierCSV << ";\"reactions\""; //dernière colonne donne le nombre de réactions
-	//deuxième ligne : situation initiale
-	fichierCSV << std::endl << 0; //temps = 0
-    for(EspeceMoleculaire *e : especes) fichierCSV << ';' << e->pop; //population de chaque espèce séparées par des virgules
+	// Deuxième ligne : situation initiale
+	fichierCSV << std::endl << 0; // temps = 0
+    for(EspeceMoleculaire *e : especes) fichierCSV << ';' << e->pop; // Population de chaque espèce séparée par des virgules
 	fichierCSV << ';' << 0; //pas encore de réaction
 }
 
-void SortieCSV::ajouter(std::vector<double> valeurs){
+void SortieCSV::ajouter(std::vector<double> valeurs) // Ajoute une nouvelle ligne de valeurs
+{
 	bool premier = true;
-	for(double v : valeurs){
-		if(premier){
-			//ajouter une ligne
+	for(double v : valeurs)
+	{
+		if(premier)
+		{
+			// Ajouter une ligne
 			premier = false;
 			fichierCSV << std::endl;
-			//afficher le temps
+			// Afficher le temps
 			fichierCSV << (int) v;
-		}else{
-			//ajouter une virgule
+		}
+		else
+		{
+			// Ajouter une virgule
 			fichierCSV << ';';
-			//ajouter la valeur
+			// Ajouter la valeur
 			fichierCSV << v;
 		}
 		
 	}
 }
 
-void SortieCSV::fermerFichier(){
+void SortieCSV::fermerFichier() // Ferme le fichier CSV
+{
 	fichierCSV.close();
 }

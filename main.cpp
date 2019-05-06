@@ -8,25 +8,25 @@
 #include "SortieCSV.h"
 #include "SortieGraph.h"
 
-int diametre;
-std::vector<EspeceMoleculaire*> especes;
-std::vector<Reaction*> reactions;
-extern FILE *yyin;
+int diametre; // Diamètre de l'environnement (Une boule)
+std::vector<EspeceMoleculaire*> especes; // Vecteur des espèces moléculaires disponibles
+std::vector<Reaction*> reactions; // Vecteur des réactions disponibles
+extern FILE *yyin; // Fichier à parser
 
-int main (int argc, char** argv)
+int main(int argc, char** argv)
 {
-    int a = 2;
-    int skip = 1;
-    int nbIter = 100;
-    bool fileDone = false, timeDone = false, simultypeDone = false, entiteCentree = false, jumpDone = false;
+    int a = 2; // On traite les arguments par paquet de 2
+    int skip = 1; // Nombre d'itérations requises pour mettre à jour l'affichage
+    int nbIter = 100; // Nombre d'itérations
+    bool fileDone = false, timeDone = false, simultypeDone = false, entiteCentree = false, jumpDone = false; // Pour savoir quels arguments ont étés réglés
     while (argc > a) 
     {
-        if(std::string(argv[a - 1]) == "-f" && !fileDone)
+        if(std::string(argv[a - 1]) == "-f" && !fileDone) // Argument : -f nomFichier       Permet de spécifier le fichier à charger
         {
             yyin = fopen(argv[a], "r");
             fileDone = true;
         }
-        else if(std::string(argv[a - 1]) == "-t" && !timeDone)
+        else if(std::string(argv[a - 1]) == "-t" && !timeDone) // Argument : -t tempsEnµs   Spécifie le temps de simulation et le convertit en nombre d'itérations
         {
             nbIter = atoi(argv[a]) / 100;
             timeDone = true;
@@ -36,7 +36,7 @@ int main (int argc, char** argv)
                exit(0); 
             }
         }
-        else if(std::string(argv[a - 1]) == "-j" && !jumpDone)
+        else if(std::string(argv[a - 1]) == "-j" && !jumpDone) // Argument : -j tempsEnµs   Spécifie le temps de simulation devant s'être écoulé pour mettre à jour l'affichage
         {
             skip = atoi(argv[a]) / 100;
             jumpDone = true;
@@ -46,7 +46,7 @@ int main (int argc, char** argv)
                exit(0); 
             }
         }
-        else if(std::string(argv[a - 1]) == "-s" && !simultypeDone)
+        else if(std::string(argv[a - 1]) == "-s" && !simultypeDone) // Argument : -s modeSimulation   Spécifie le mode de simulation
         {
             if(std::string(argv[a]) == "entiteCentree")
             {
@@ -65,123 +65,55 @@ int main (int argc, char** argv)
         }
         a += 2;
     }
+
+    if(!fileDone)
+    {
+        std::cout << "Veuillez spécifier le fichier d'entrée avec l'option -f" << std::endl;
+        exit(0);
+    }
     
 
 
     yy::parser parser;
-    parser.parse();
+    parser.parse(); // On lit et interprète le fichier
 
-    /*for(EspeceMoleculaire *e : especes)
-    {
-        std::cout << "Molecule : " << std::endl;
-        std::cout << "\tNom : " << e->getNom() << std::endl;
-        std::cout << "\tTaille : " << e->getTaille() << std::endl;
-        std::cout << "\tVitesse : " << e->getVitesse() << std::endl;
-        std::cout << "\tPop : " << e->pop << std::endl << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    for(Reaction *r : reactions)
-    {
-        std::cout << "Reaction : " << std::endl;
-        std::cout << "\tMolecule 1 : " << r->getReac1()->getNom() << std::endl;
-        if(r->get2Reac()) std::cout << "\tMolecule 2 : " << r->getReac2()->getNom() << std::endl;
-        std::cout << "\tMolecule 3 : " << r->getProduit1()->getNom() << std::endl;
-        if(r->get2Produits()) std::cout << "\tMolecule 4 : " << r->getProduit2()->getNom() << std::endl << std::endl;
-        std::cout << "\tProba : " << r->getProba() << std::endl << std::endl;
-    }
-
-    std::cout << "Diametre : " << diametre << std::endl << std::endl;
-*/
     SortieCSV csv;
-    csv.initFichier(especes);
+    csv.initFichier(especes); // Création du fichier CSV de sortie
 
-    SortieGraph graph(especes, nbIter * 100);
+    SortieGraph graph(especes, nbIter * 100); // Initialisation de l asortie graphique
 
-    double temps = 0;
-    std::vector<double> resultats;
-    Environnement env;
-    std::vector<Molecule *> listeMol = initSimulationEntitee(&env);
-    /*std::cout << "Nombre de molécules : " << listeMol.size() << std::endl;
-    
-    for(Molecule m : listeMol)
-    {
-        std::cout << "Molecule : " << std::endl;
-        std::cout << "\tX : " << m.getX() << std::endl;
-        std::cout << "\tY : " <<m.getY() << std::endl;
-        std::cout << "\tZ : " << m.getZ() << std::endl;
-        std::cout << "\tEspèce : " << m.getEspece()->getNom() << std::endl << std::endl;
-    }
+    double temps = 0; //Temps en µs de simulation
+    std::vector<double> resultats; // Vecteur contenant les résultats d'un pas de simulation
+    Environnement env; // Environnement où les molécules interagissent (Utilisé en entité centré seulement)
+    std::vector<Molecule *> listeMol = initSimulationEntitee(&env); // Création de la liste des molécules (Utilisé en entité centré seulement)
 
-    
-    std::cout << "Liste de molécules : " << env.findMolecule(&(listeMol[0]))->size() << std::endl; */
-    int sum = 0;
-    for(int i = 0; i < env.cubeSize(); i++)
-    {
-        for(int j = 0; j < env.cubeSize(); j++)
-        {
-            for(int k = 0; k < env.cubeSize(); k++)
-            {
-                sum += env.getListIndices(i, j, k).size();
-            }
-        }
-    }
-    
-    
-    std::cout << "NB Mol : " << sum << std::endl;
+    bool sens = true; // Sens de lecture de la liste de molécules
 
-    std::vector<Molecule*> listMol = env.findMolecule(listeMol[0]);
-    for(size_t molI = 0; molI < listMol.size(); molI++) 
-    {
-        std::cout << listMol.at(molI) << std::endl;
-        std::cout << listMol.at(molI)->getEspece()->getNom() << std::endl;
-    }
-    std::cout << listeMol[0] << std::endl;
-    
-
-    bool sens = true;
-
-
-    std::cout << "Après une étape : " << std::endl;
-    std::cout << "Taille cube : " << env.cubeSize() << std::endl;
         
-    int s = 1;
-    int nbCollisions = 0;
-    for(int j = 0; j < nbIter; j++)
+    int s = 1; // Nombre d'itérations depuis la dernière mise à jour des résultats
+    int nbReactions = 0;
+    for(int j = 0; j < nbIter; j++) // Pour chaque itération
     {    
-        if(entiteCentree)
+        if(entiteCentree) 
         {
             resultats = simulationEntiteeStep(temps, &env, listeMol, sens);
-            sens = !sens;
-            //std::cout << "endStep" << std::endl;
+            sens = !sens; // Changement de sens
         }
-        else
+        else // Population centré
         {
             resultats = simulationSimpleStep(temps);
         }
 
-        nbCollisions += resultats.back();
+        nbReactions += resultats.back(); // on comte le nombre de collisions
 
-        if(s >= skip)
+        if(s >= skip) // Toutes les skip frames, on met à jour les résultat et l'affichage
         {
-            int i = 0;
-            s = 1;
-            
+            s = 1;            
             resultats.pop_back();
-            resultats.push_back(nbCollisions);
-            nbCollisions = 0;
-
-            /*for(double d : resultats) 
-            {
-                std::cout << "Col " << i << " : " << d << std::endl;
-                i++;
-
-            }
-            std::cout << std::endl << std::endl << std::endl;
-            */
-            csv.ajouter(resultats);
-            graph.ajouter(resultats);
+            resultats.push_back(nbReactions); // On met le nombre de collisions depuis la dernière MaJ
+            nbReactions = 0;
+            csv.ajouter(resultats); //Ajout des résultats dans le fichier CSV
+            graph.ajouter(resultats); //Ajout des résultats dans le ficgraphique
         }
         else
         {
@@ -206,7 +138,7 @@ int main (int argc, char** argv)
     }
 
     csv.fermerFichier();
-    graph.afficher();
+    graph.afficher(); // On affiche le graphe final
 
     return 0;
 }

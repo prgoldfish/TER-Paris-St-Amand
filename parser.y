@@ -19,7 +19,6 @@
 %require "3.2" /*To remove useless stack.hh*/
 
 %token IDENT
-/*%token INTEGER*/
 %token NUMBER
 %token SPECIES
 %token LP

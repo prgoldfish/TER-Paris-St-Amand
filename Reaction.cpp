@@ -2,7 +2,7 @@
 #include "EspeceMoleculaire.h"
 
 
-Reaction::Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2, bool dr, bool dp, float p)
+Reaction::Reaction(EspeceMoleculaire* r1, EspeceMoleculaire* r2, EspeceMoleculaire* p1, EspeceMoleculaire* p2, bool dr, bool dp, float p) // COnstructeur d'une réaction
 {
 	reac1 = r1;
 	deuxReac = dr;

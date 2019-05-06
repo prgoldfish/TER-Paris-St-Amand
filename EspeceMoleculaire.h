@@ -6,11 +6,11 @@
 class EspeceMoleculaire
 {
 private:
-    std::string nom;
-    int taille;
-    float vitesse;
+    std::string nom; // Nom de l'espèce
+    int taille; // Taille en nm
+    float vitesse; // Vitesse
 public:
-    int pop;
+    int pop; // Nombre de molécules de cette espèce
 
     EspeceMoleculaire();
     EspeceMoleculaire(std::string nom);
