@@ -48,7 +48,7 @@ int main(int argc, char** argv)
         }
         else if(std::string(argv[a - 1]) == "-s" && !simultypeDone) // Argument : -s modeSimulation   Spécifie le mode de simulation
         {
-            if(std::string(argv[a]) == "entiteCentree")
+            if(std::string(argv[a]) == "entiteCentre")
             {
                 entiteCentree = true;
             }
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
             }
             else
             {
-                std::cout << "Mode de simulation non reconnu. Modes disponibles : entiteCentree et simple" << std::endl;
+                std::cout << "Mode de simulation non reconnu. Modes disponibles : entiteCentre et simple" << std::endl;
                 exit(0);
             }
             simultypeDone = true;
